@@ -18,6 +18,10 @@ export default function RootLayout({ children }) {
       appearance={{
         baseTheme: shadesOfPurple,
       }}
+      elements={{
+        card: "bg-gray-00",
+        footer: "hidden",
+      }}
     >
       <html lang="en">
         <body className={`${inter.className}`}>
