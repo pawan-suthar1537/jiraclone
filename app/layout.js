@@ -12,9 +12,10 @@ export const metadata = {
   description: "Jira Clone",
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children, pageProps }) {
   return (
     <ClerkProvider
+      {...pageProps}
       appearance={{
         baseTheme: shadesOfPurple,
       }}
