@@ -1,0 +1,32 @@
+[
+  {
+    "name": "amazon",
+    "img": "/companies/amazon.png",
+    "id": 1
+  },
+  {
+    "name": "google",
+    "img": "/companies/amazon.png",
+    "id": 2
+  },
+  {
+    "name": "facebook",
+    "img": "/companies/amazon.png",
+    "id": 3
+  },
+  {
+    "name": "microsoft",
+    "img": "/companies/amazon.png",
+    "id": 4
+  },
+  {
+    "name": "apple",
+    "img": "/companies/amazon.png",
+    "id": 5
+  },
+  {
+    "name": "twitter",
+    "img": "/companies/amazon.png",
+    "id": 6
+  }
+]
