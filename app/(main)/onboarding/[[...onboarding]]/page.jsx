@@ -8,14 +8,17 @@ const Onboarding = () => {
   const router = useRouter();
 
   useEffect(() => {
-    console.log("organization", organization);
-    if (organization) {
+    if (organization && organization.slug) {
       router.push(`/organization/${organization.slug}`);
     }
-  }, [organization]);
+  }, [organization, router]);
   return (
     <div className="flex items-center justify-center pt-14">
-      <OrganizationList hidePersonal />
+      <OrganizationList
+        hidePersonal
+        afterCreateOrganizationUrl="/organization/:slug"
+        afterSelectOrganizationUrl="/organization/:slug"
+      />
     </div>
   );
 };

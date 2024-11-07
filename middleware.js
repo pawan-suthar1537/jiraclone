@@ -9,20 +9,21 @@ const isProtectedRoute = createRouteMatcher([
   "/sprint(.*)",
 ]);
 
-export default clerkMiddleware((auth, req) => {
+export default clerkMiddleware(async (auth, req) => {
   const url = new URL(req.url);
+  const userAuth = await auth();
 
-  if (!auth().userId && isProtectedRoute(req)) {
+  if (!userAuth.userId && isProtectedRoute(req)) {
     return NextResponse.redirect(new URL("/sign-in", req.url));
   }
 
-  if (auth().userId && url.pathname === "/sign-in") {
+  if (userAuth.userId && url.pathname === "/sign-in") {
     return NextResponse.redirect(new URL("/onboarding", req.url));
   }
 
   if (
-    auth().userId &&
-    !auth.orgid &&
+    userAuth.userId &&
+    !userAuth.orgId &&
     req.nextUrl.pathname !== "/onboarding" &&
     req.nextUrl.pathname !== "/"
   ) {
