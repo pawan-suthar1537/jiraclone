@@ -50,3 +50,24 @@ export async function createIssue(projectId, data) {
 
   return issue;
 }
+
+export async function getIssueforsprint(sprintId) {
+  const { userId, orgId } = auth();
+
+  if (!userId || !orgId) {
+    throw new Error("Unauthorized");
+  }
+
+  const issues = await db.issue.findMany({
+    where: {
+      sprintId: sprintId,
+    },
+    orderBy: [{ status: "asc" }, { order: "asc" }],
+    include: {
+      reporter: true,
+      assignee: true,
+    },
+  });
+
+  return issues;
+}
