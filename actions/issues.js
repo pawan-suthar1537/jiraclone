@@ -1,7 +1,10 @@
+"use server";
+
 import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 
-export async function createIssue(data, projectId) {
+export async function createIssue(projectId, data) {
+  console.log("sdfsdfsdf", data, projectId);
   const { userId, orgId } = auth();
 
   if (!userId || !orgId) {
@@ -10,13 +13,14 @@ export async function createIssue(data, projectId) {
 
   let user = await db.user.findUnique({
     where: {
-      clerkUserid: userId,
+      clerkUserId: userId,
     },
   });
 
   const lastissue = await db.issue.findFirst({
     where: {
-      projectId,
+      projectId: projectId,
+
       status: data.status,
     },
     orderBy: {
@@ -36,7 +40,7 @@ export async function createIssue(data, projectId) {
       projectId: projectId,
       sprintId: data.sprintId,
       reporterId: user.id,
-      assigneeId: data.assigneeId || null,
+      assigneeId: data.assigneeId,
     },
     include: {
       reporter: true,

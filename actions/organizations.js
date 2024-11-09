@@ -45,7 +45,7 @@ export async function getOrganization(slug) {
 }
 
 export async function getOrganizationusers(orgId) {
-  const { userId } = await auth();
+  const { userId } = auth();
 
   if (!userId) {
     throw new Error("Unauthorized");
@@ -73,10 +73,12 @@ export async function getOrganizationusers(orgId) {
   const users = await db.user.findMany({
     where: {
       clerkUserId: {
-        id: userIds,
+        in: userIds,
       },
     },
   });
+
+  console.log("usersusersusers", users);
 
   return users;
 }
