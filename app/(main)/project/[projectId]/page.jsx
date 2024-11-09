@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import React from "react";
 import SprintCreationForm from "../_components/SprintCreationForm";
+import SprintBoard from "../_components/SprintBoard";
 
 const ProjectPage = async ({ params }) => {
   const { projectId } = params;
@@ -22,7 +23,11 @@ const ProjectPage = async ({ params }) => {
       />
       {/* sprintboard */}
       {project.sprints.length > 0 ? (
-        <></>
+        <SprintBoard
+          sprints={project.sprints}
+          projectId={projectId}
+          orgId={project.organizationId}
+        />
       ) : (
         <div>Create Sprint from Button</div>
       )}
