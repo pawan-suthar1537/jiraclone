@@ -11,6 +11,7 @@ import useFetch from "@/hooks/use-fetch";
 import { getIssueforsprint } from "@/actions/issues";
 import { BarLoader } from "react-spinners";
 import IssueCard from "./IssueCard";
+import { toast } from "sonner";
 
 const SprintBoard = ({ sprints, projectId, orgId }) => {
   const [currSprint, setcurrSprint] = useState(
@@ -47,7 +48,66 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
     getissuesfn(currSprint.id);
   };
 
-  const onDragEnd = () => {};
+  const onDragEnd = async (result) => {
+    if (currSprint.status === "PLANNED") {
+      toast.warning("start the sprint to update board");
+      return;
+    }
+    if (currSprint.status === "COMPLETED") {
+      toast.warning("cannot update board after sprint end");
+      return;
+    }
+    const { destination, source, draggableId } = result;
+
+    if (!destination) return;
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    )
+      return;
+
+    const newData = [...issues];
+
+    const sourcelist = newData.filter((li) => li.status === source.droppableId);
+
+    const destlist = newData.filter(
+      (li) => li.status === destination.droppableId
+    );
+
+    if (source.droppableId === destination.droppableId) {
+      const reorderedcards = reorder(
+        sourcelist,
+        source.index,
+        destination.index
+      );
+
+      reorderedcards.forEach((card, index) => {
+        card.order = index;
+      });
+    } else {
+      const [movedcard] = sourcelist.splice(source.index, 1);
+      movedcard.status = destination.droppableId;
+      destlist.splice(destination.index, 0, movedcard);
+
+      sourcelist.forEach((card, index) => {
+        card.order = index;
+      });
+      destlist.forEach((card, index) => {
+        card.order = index;
+      });
+    }
+
+    const sortedissues = newData.sort((a, b) => a.order - b.order);
+    setissues(newData, sortedissues);
+  };
+
+  const reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    return result;
+  };
 
   if (issueserror) return <div>Error Loading Issues</div>;
   return (

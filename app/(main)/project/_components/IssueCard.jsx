@@ -3,7 +3,6 @@ import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -48,6 +47,7 @@ const IssueCard = ({
           <div className="text-xs text-gray-400 w-full">Created {created}</div>
         </CardFooter>
       </Card>
+      {opendialog && <></>}
     </>
   );
 };
