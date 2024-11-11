@@ -12,6 +12,7 @@ import { getIssueforsprint, updateIssueOrder } from "@/actions/issues";
 import { BarLoader } from "react-spinners";
 import IssueCard from "./IssueCard";
 import { toast } from "sonner";
+import BoardFilters from "./BoardFilters";
 
 const SprintBoard = ({ sprints, projectId, orgId }) => {
   const [currSprint, setcurrSprint] = useState(
@@ -35,6 +36,10 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
   } = useFetch(getIssueforsprint);
 
   const [filteredissue, setfilteredissue] = useState(issues);
+
+  const handlefilterchange = (newfilterissues) => {
+    setfilteredissue(newfilterissues);
+  };
 
   console.log("issuesissuesissuesissuesissues", issues);
 
@@ -128,6 +133,10 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
         projectId={projectId}
       />
 
+      {issues && !issuesloading && (
+        <BoardFilters issues={issues} onFilterChange={handlefilterchange} />
+      )}
+
       {updateissueError && <p>{updateissueError.message}</p>}
       {(updateissueError || issuesloading) && (
         <BarLoader width={"100%"} color="#36d7b7" />
@@ -150,7 +159,7 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
 
                     {/* issues render */}
 
-                    {issues
+                    {filteredissue
                       ?.filter((issue) => issue.status === col.key)
                       .map((issue, i) => (
                         <Draggable
