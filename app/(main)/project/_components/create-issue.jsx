@@ -122,7 +122,6 @@ const IssueCreateDrawer = ({
               render={({ field }) => (
                 <Select
                   onValueChange={(value) => {
-                    console.log("Selected Assignee ID:", value);
                     field.onChange(value);
                   }}
                   value={field.value}

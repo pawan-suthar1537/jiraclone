@@ -58,7 +58,7 @@ const SprintCreationForm = ({
         startDate: daterange.from,
         endDate: daterange.to,
       });
-      console.log(sprint);
+
       setShowForm(false);
       toast.success("Sprint Created");
       router.refresh();

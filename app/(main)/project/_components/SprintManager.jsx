@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/select";
 import useFetch from "@/hooks/use-fetch";
 import { format, formatDistanceToNow, isAfter, isBefore } from "date-fns";
+import { Router } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { BarLoader } from "react-spinners";
 
@@ -20,6 +22,10 @@ const SprintManager = ({ sprint, sprints, setSprint, projectId }) => {
   const startDate = new Date(sprint.startDate);
   const endDate = new Date(sprint.endDate);
   const now = new Date();
+
+  const router = useRouter();
+
+  const serchparams = useSearchParams();
 
   const canstart =
     isBefore(now, endDate) && isAfter(now, startDate) && status === "PLANNED";
@@ -47,10 +53,24 @@ const SprintManager = ({ sprint, sprints, setSprint, projectId }) => {
     }
   }, [updatedstatus, loading]);
 
+  useEffect(() => {
+    const sprintId = serchparams.get("sprint");
+    if (sprintId && sprintId !== sprint.id) {
+      const selectedsprint = sprints.find((s) => s.id === sprintId);
+      if (selectedsprint) {
+        setSprint(selectedsprint);
+        setstatus(selectedsprint.status);
+      }
+    }
+  }, [serchparams, sprints]);
+
   const handlesprintselect = (value) => {
     const selectsprint = sprints.find((s) => s.id === value);
     setSprint(selectsprint);
     setstatus(selectsprint.status);
+    Router.replace(`/project/${projectId}`, undefined, {
+      shallow: true,
+    });
   };
 
   const getsprintstatusText = () => {

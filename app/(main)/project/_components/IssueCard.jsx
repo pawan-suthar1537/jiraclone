@@ -1,3 +1,5 @@
+"use client";
+
 import UserAvatar from "@/components/iuser-avatar";
 import { Badge } from "@/components/ui/badge";
 import {

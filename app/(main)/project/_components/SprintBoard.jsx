@@ -41,8 +41,6 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
     setfilteredissue(newfilterissues);
   };
 
-  console.log("issuesissuesissuesissuesissues", issues);
-
   useEffect(() => {
     if (currSprint.id) {
       getissuesfn(currSprint.id);

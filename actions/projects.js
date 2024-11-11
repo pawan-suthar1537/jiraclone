@@ -69,8 +69,6 @@ export async function getProjects(orgId) {
     },
   });
 
-  console.log("projects from action ", project);
-
   return project;
 }
 
@@ -143,8 +141,6 @@ export async function getProject(projectId) {
   if (project.organizationId !== orgId) {
     return null;
   }
-
-  console.log("project from action ", project);
 
   return project;
 }

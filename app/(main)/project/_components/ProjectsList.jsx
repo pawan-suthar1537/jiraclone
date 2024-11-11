@@ -6,8 +6,6 @@ import DeleteProject from "./DeleteProject";
 export default async function ProjectList({ orgId }) {
   const projects = await getProjects(orgId);
 
-  console.log("projects", projects);
-
   if (projects.length === 0) {
     return (
       <p>

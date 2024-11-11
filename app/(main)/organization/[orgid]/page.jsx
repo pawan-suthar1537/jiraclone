@@ -3,9 +3,17 @@ import OrgSwitcher from "@/components/OrgSwitcher";
 
 import React from "react";
 import ProjectsList from "../../project/_components/ProjectsList";
+import UsersIssues from "./_components/user-issues";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 const Organization = async ({ params }) => {
   const { orgid } = await params;
+  const { userId } = auth();
+
+  if (!userId) {
+    redirect("/sign-in");
+  }
 
   const organization = await getOrganization(orgid);
 
@@ -24,7 +32,9 @@ const Organization = async ({ params }) => {
       <div className="mb-4">
         <ProjectsList orgId={organization.id} />
       </div>
-      <div className="mt-8">Show User assigned and reported issues here</div>
+      <div className="mt-8">
+        <UsersIssues userId={userId} />
+      </div>
     </div>
   );
 };

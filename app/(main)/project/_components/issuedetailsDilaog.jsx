@@ -161,7 +161,7 @@ const IssuedetailsDilaog = ({
           {canchange && (
             <Button
               variant="destructive"
-              onCick={handledelete}
+              onClick={handledelete}
               disabled={deleteloading}
             >
               {deleteloading ? "Deleting..." : "Delete Issue"}

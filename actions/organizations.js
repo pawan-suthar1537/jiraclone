@@ -78,7 +78,5 @@ export async function getOrganizationusers(orgId) {
     },
   });
 
-  console.log("usersusersusers", users);
-
   return users;
 }
