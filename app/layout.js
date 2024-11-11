@@ -27,7 +27,7 @@ export default function RootLayout({ children, pageProps }) {
       navigate={(to) => {
         // Modify the redirect logic to point to your live web app URL
         if (to.url.startsWith("/sign-in/[[...index]]")) {
-          window.location.href = "https://jiraclone-mocha.vercel.app/";
+          window.location.href = "https://jiraclone-mocha.vercel.app";
         } else {
           navigateToPath(to.url);
         }
