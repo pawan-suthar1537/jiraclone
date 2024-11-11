@@ -24,14 +24,6 @@ export default function RootLayout({ children, pageProps }) {
         card: "bg-gray-00",
         footer: "hidden",
       }}
-      navigate={(to) => {
-        // Modify the redirect logic to point to your live web app URL
-        if (to.url.startsWith("/sign-in/[[...index]]")) {
-          window.location.href = "https://jiraclone-mocha.vercel.app";
-        } else {
-          navigateToPath(to.url);
-        }
-      }}
     >
       <html lang="en">
         <body className={`${inter.className} dotted-background`}>
