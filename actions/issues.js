@@ -71,3 +71,118 @@ export async function getIssueforsprint(sprintId) {
 
   return issues;
 }
+
+export async function updateIssueOrder(updateIssues) {
+  const { userId, orgId } = auth();
+
+  if (!userId || !orgId) {
+    throw new Error("Unauthorized");
+  }
+
+  await db.$transaction(async (prisma) => {
+    for (const issue of updateIssues) {
+      await prisma.issue.update({
+        where: {
+          id: issue.id,
+        },
+        data: {
+          order: issue.order,
+          status: issue.status,
+        },
+      });
+    }
+  });
+
+  return {
+    success: true,
+  };
+}
+
+export async function deleteissue(issueId) {
+  const { userId, orgId } = auth();
+
+  if (!userId || !orgId) {
+    throw new Error("Unauthorized");
+  }
+
+  const user = await db.user.findUnique({
+    where: {
+      clerkUserId: userId,
+    },
+  });
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+  const issue = await db.issue.findUnique({
+    where: {
+      id: issueId,
+    },
+    include: {
+      project: true,
+    },
+  });
+
+  if (!issue) {
+    throw new Error("Issue not found");
+  }
+
+  if (issue.reporterId !== user.id && issue.project.adminIds.include(user.id)) {
+    throw new Error("You are not allowed to delete this issue");
+  }
+
+  await db.issue.delete({
+    where: {
+      id: issueId,
+    },
+  });
+
+  return {
+    success: true,
+  };
+}
+
+export async function updateissue(issueId, data) {
+  const { userId, orgId } = auth();
+
+  if (!userId || !orgId) {
+    throw new Error("Unauthorized");
+  }
+
+  try {
+    const issue = await db.issue.findUnique({
+      where: {
+        id: issueId,
+      },
+      include: {
+        project: true,
+      },
+    });
+
+    if (!issue) {
+      throw new Error("Issue not found");
+    }
+
+    if (issue.project.organizationId !== orgId) {
+      throw new Error("Unauthorized");
+    }
+
+    const updateissues = await db.issue.update({
+      where: {
+        id: issueId,
+      },
+      data: {
+        status: data.status,
+        priority: data.priority,
+      },
+      include: {
+        reporter: true,
+        assignee: true,
+      },
+    });
+
+    return updateissues;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}

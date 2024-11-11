@@ -8,7 +8,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { formatDistanceToNow } from "date-fns";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+
+import IssuedetailsDilaog from "./issuedetailsDilaog";
 
 const colorpriority = {
   LOW: "border-green-500",
@@ -24,13 +27,28 @@ const IssueCard = ({
   onUpdate = () => {},
 }) => {
   const [opendialog, setopendialog] = useState(false);
+  const router = useRouter();
+
+  const onDeletehandler = (...params) => {
+    onDelete(...params);
+    window.location.reload(); // Reload the page after deletion
+  };
+
+  const onUpdatehandler = (...params) => {
+    onUpdate(...params);
+    window.location.reload(); // Reload the page after deletion
+  };
+
   const created = formatDistanceToNow(new Date(issue?.CreatedAt), {
     addSuffix: true,
   });
 
   return (
     <>
-      <Card className="cursor-pointer hover:shadow-md transition-shadow">
+      <Card
+        onClick={() => setopendialog(true)}
+        className="cursor-pointer hover:shadow-md transition-shadow"
+      >
         <CardHeader
           className={`border-t-2 ${colorpriority[issue.priority]} rounded-lg`}
         >
@@ -47,7 +65,16 @@ const IssueCard = ({
           <div className="text-xs text-gray-400 w-full">Created {created}</div>
         </CardFooter>
       </Card>
-      {opendialog && <></>}
+      {opendialog && (
+        <IssuedetailsDilaog
+          isOpen={opendialog}
+          onClose={() => setopendialog(false)}
+          issue={issue}
+          onDelete={onDeletehandler}
+          onUpdate={onUpdatehandler}
+          bordercol={colorpriority[issue.priority]}
+        />
+      )}
     </>
   );
 };

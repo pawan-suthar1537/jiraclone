@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import IssueCreateDrawer from "./create-issue";
 import useFetch from "@/hooks/use-fetch";
-import { getIssueforsprint } from "@/actions/issues";
+import { getIssueforsprint, updateIssueOrder } from "@/actions/issues";
 import { BarLoader } from "react-spinners";
 import IssueCard from "./IssueCard";
 import { toast } from "sonner";
@@ -47,6 +47,12 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
   const handleIsseCreated = () => {
     getissuesfn(currSprint.id);
   };
+
+  const {
+    fn: updateissueorderfn,
+    loading: updateissueorderloading,
+    error: updateissueError,
+  } = useFetch(updateIssueOrder);
 
   const onDragEnd = async (result) => {
     if (currSprint.status === "PLANNED") {
@@ -100,6 +106,8 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
 
     const sortedissues = newData.sort((a, b) => a.order - b.order);
     setissues(newData, sortedissues);
+
+    updateissueorderfn(sortedissues);
   };
 
   const reorder = (list, startIndex, endIndex) => {
@@ -120,7 +128,10 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
         projectId={projectId}
       />
 
-      {issuesloading && <BarLoader width={"100%"} color="#36d7b7" />}
+      {updateissueError && <p>{updateissueError.message}</p>}
+      {(updateissueError || issuesloading) && (
+        <BarLoader width={"100%"} color="#36d7b7" />
+      )}
       {/* kanban board */}
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4 bg-slate-900 p-4 rounded-lg">
@@ -146,6 +157,7 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
                           key={issue.id}
                           draggableId={issue.id}
                           index={i}
+                          isDragDisabled={updateissueorderloading}
                         >
                           {(provided) => {
                             return (
@@ -154,7 +166,22 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
                                 {...provided.draggableProps}
                                 {...provided.dragHandleProps}
                               >
-                                <IssueCard issue={issue} />
+                                <IssueCard
+                                  issue={issue}
+                                  onDelete={() =>
+                                    getIssueforsprint(currSprint.id)
+                                  }
+                                  onUpdate={(updated) => {
+                                    setissues((issues) => {
+                                      issues.map((issue) => {
+                                        if (issue.id === updated.id) {
+                                          return updated;
+                                        }
+                                        return issue;
+                                      });
+                                    });
+                                  }}
+                                />
                               </div>
                             );
                           }}
