@@ -6,27 +6,27 @@
   },
   {
     "name": "google",
-    "img": "/companies/amazon.png",
+    "img": "/companies/gg.png",
     "id": 2
   },
   {
     "name": "facebook",
-    "img": "/companies/amazon.png",
+    "img": "/companies/f.png",
     "id": 3
   },
   {
     "name": "microsoft",
-    "img": "/companies/amazon.png",
+    "img": "/companies/b.png",
     "id": 4
   },
   {
     "name": "apple",
-    "img": "/companies/amazon.png",
+    "img": "/companies/app.png",
     "id": 5
   },
   {
     "name": "twitter",
-    "img": "/companies/amazon.png",
+    "img": "/companies/tw.png",
     "id": 6
   }
 ]

@@ -1,30 +1,30 @@
 [
   {
     "question": "What features does iconScrum offer?",
-    "answer": "iconScrum offers a variety of features including task management, team collaboration tools, progress tracking, customizable dashboards, and reporting analytics. These features are designed to enhance productivity and streamline project workflows."
+    "answer": "iconScrum offers an extensive suite of features designed to simplify and enhance project management. Key features include task management for creating, assigning, and tracking tasks; team collaboration tools with real-time communication, comments, and file sharing; progress tracking with visual indicators like Gantt charts and Kanban boards; customizable dashboards where teams can organize their preferred metrics; and detailed reporting and analytics to review performance and optimize workflows. These features aim to centralize project management efforts and make workflows more efficient."
   },
   {
     "question": "How does iconScrum improve team collaboration?",
-    "answer": "iconScrum improves team collaboration through real-time updates, shared task lists, and communication tools that allow team members to discuss tasks and share feedback directly within the platform, ensuring everyone stays on the same page."
+    "answer": "iconScrum significantly boosts team collaboration by offering tools that streamline communication and task sharing within projects. With real-time updates and notifications, team members are always aware of project changes. Shared task lists and team-wide visibility foster accountability and transparency, while built-in communication tools, like comments and @mentions, make it easy for team members to give feedback or share ideas directly within the platform. This unified approach keeps everyone in sync, minimizing the need for external communication channels and ensuring that project discussions stay focused and accessible."
   },
   {
     "question": "Is iconScrum suitable for remote teams?",
-    "answer": "Yes, iconScrum is highly suitable for remote teams. Its cloud-based platform allows team members to access project information from anywhere, making it easy to collaborate and manage tasks regardless of location."
+    "answer": "Yes, iconScrum is ideal for remote teams. Its cloud-based platform provides access from any device with an internet connection, enabling team members to stay connected and manage tasks from anywhere in the world. Remote teams benefit from real-time project updates, allowing managers to see task progress without the need for constant check-ins. Additionally, iconScrum includes timezone support and configurable notifications to accommodate global teams, making it easier to manage work asynchronously across different regions."
   },
   {
     "question": "Can I integrate iconScrum with other tools?",
-    "answer": "Absolutely! iconScrum supports integration with various third-party applications such as Slack, Google Drive, and Trello, allowing you to enhance your project management experience and streamline your workflow."
+    "answer": "Absolutely! iconScrum integrates seamlessly with popular third-party applications to enhance productivity. Supported integrations include Slack for real-time communication, Google Drive for easy file storage and sharing, and Trello for task management compatibility. Through these integrations, teams can manage their workflows more efficiently by centralizing project-related tools in one platform, reducing the need to switch between multiple applications. Additionally, iconScrum’s API and webhook support allow for custom integrations tailored to your organization’s specific needs."
   },
   {
     "question": "Is there a mobile app for iconScrum?",
-    "answer": "Yes, iconScrum offers a mobile app that allows users to manage tasks, communicate with team members, and track project progress on the go. This ensures that you can stay productive even when you're not at your desk."
+    "answer": "Yes, iconScrum provides a mobile app that allows users to manage their tasks, communicate with team members, and track project updates while on the go. The mobile app includes core features from the desktop version, such as task creation, notifications, and commenting. It is designed for productivity on the move, enabling users to stay informed and respond to updates even when they are away from their desks. Available for both iOS and Android, the iconScrum app helps ensure that team members stay connected and projects stay on track, no matter where they are."
   },
   {
     "question": "How can I get started with iconScrum?",
-    "answer": "Getting started with iconScrum is easy! Simply sign up for an account on our website, and you can start a free trial to explore the features and functionalities. Our user-friendly interface will guide you through the setup process."
+    "answer": "Getting started with iconScrum is quick and easy. Visit our website, create an account, and begin your free trial, which gives you access to the full range of features. The platform offers an intuitive onboarding experience that guides you through setup, including configuring your first project, creating tasks, and inviting team members. For additional help, iconScrum offers in-app tutorials and a dedicated help center to ensure a smooth onboarding process. Start exploring iconScrum and experience how it can streamline your project management today."
   },
   {
     "question": "What kind of support does iconScrum provide?",
-    "answer": "iconScrum provides comprehensive support including a help center with tutorials, FAQs, and documentation. Additionally, our customer support team is available via email and chat to assist you with any questions or issues you may encounter."
+    "answer": "iconScrum is committed to providing reliable customer support through multiple channels. Our Help Center includes an extensive collection of tutorials, FAQs, and step-by-step guides to help you navigate the platform. For more personalized support, our dedicated customer support team is available via email and live chat to answer questions, troubleshoot issues, and provide advice. Additionally, we offer onboarding support and, for enterprise users, an assigned account manager to ensure you get the most value from iconScrum."
   }
 ]

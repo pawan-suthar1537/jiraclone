@@ -21,7 +21,7 @@ const DeleteProject = ({ projectId }) => {
   } = useFetch(deleteProject);
 
   const handledelete = () => {
-    if (window.confirm("sachi me delete krna hai kya?")) {
+    if (window.confirm("Are you sure you want to delete this project?")) {
       deleteprojectfn(projectId);
     }
   };

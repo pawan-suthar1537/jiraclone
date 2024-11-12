@@ -1,7 +1,16 @@
 import Companycarousel from "@/components/Companycarousel";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, ChevronRight, Layout } from "lucide-react";
+import {
+  ArrowRight,
+  ChevronRight,
+  BugIcon,
+  Workflow,
+  Handshake,
+  ClipboardMinus,
+  CalendarCheck2,
+  Fingerprint,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import faqs from "@/data/faqs";
@@ -14,22 +23,40 @@ import {
 
 const features = [
   {
-    title: "Easy to use",
+    title: "Advanced Issue Tracking",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc ut aliquam aliquam, nisl nisl aliquam nisl, eget aliquam nisl nisl eget nisl. Sed euismod, nunc ut aliquam aliquam, nisl nisl aliquam nisl, eget aliquam nisl nisl eget nisl.",
-    icon: Layout,
+      "Efficiently manage issues, tasks, and bugs with a streamlined interface. Track progress, prioritize tasks, and assign them to team members with ease to ensure projects stay on schedule.",
+    icon: BugIcon,
   },
   {
-    title: "Easy to use",
+    title: "Customizable Workflows",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc ut aliquam aliquam, nisl nisl aliquam nisl, eget aliquam nisl nisl eget nisl. Sed euismod, nunc ut aliquam aliquam, nisl nisl aliquam nisl, eget aliquam nisl nisl eget nisl.",
-    icon: Layout,
+      "Design workflows that match your team's unique process. Define custom statuses, transitions, and rules to automate repetitive tasks and keep work moving seamlessly.",
+    icon: Workflow,
   },
   {
-    title: "Easy to use",
+    title: "Real-Time Collaboration",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc ut aliquam aliquam, nisl nisl aliquam nisl, eget aliquam nisl nisl eget nisl. Sed euismod, nunc ut aliquam aliquam, nisl nisl aliquam nisl, eget aliquam nisl nisl eget nisl.",
-    icon: Layout,
+      "Empower your team to collaborate effectively with real-time updates and notifications. Comment on issues, mention team members, and track every change with detailed histories.",
+    icon: Handshake,
+  },
+  {
+    title: "Detailed Reporting and Analytics",
+    description:
+      "Gain insights into your team's performance with built-in reports and custom dashboards. Visualize progress, identify bottlenecks, and make data-driven decisions to improve efficiency.",
+    icon: ClipboardMinus,
+  },
+  {
+    title: "Sprint and Project Management",
+    description:
+      "Organize tasks into sprints, set sprint goals, and manage backlogs. Use boards to visually track work, ensuring your team meets deadlines and achieves project milestones.",
+    icon: CalendarCheck2,
+  },
+  {
+    title: "Robust Permissions and Security",
+    description:
+      "Control who can access and modify project data with fine-grained permissions. Protect sensitive information and maintain data integrity by assigning roles and permissions to team members.",
+    icon: Fingerprint,
   },
 ];
 
@@ -53,7 +80,8 @@ export default function Home() {
           </span>
         </h1>
         <p className="text-xl text-gray-300 mb-10 max-w-3xl mx-auto">
-          lorem50 sd eihfseeh fuhuehf iovw hifweio vewi
+          Empower your team, streamline tasks, and reach milestones faster with
+          the ultimate project management tool.
         </p>
         <Link href="/onboarding">
           <Button size="lg" className="mr-2">
@@ -117,11 +145,12 @@ export default function Home() {
       <section className=" py-20 text-center px-5 ">
         <div className="container mx-auto">
           <h3 className="text-3xl font-bold mb-6 ">
-            Ready to Transform your workflow
+            Take Your Team's Productivity to the Next Level
           </h3>
           <p className="text-xl mb-12">
             {" "}
-            ehihe udhfujsdhf jksdhjkfhsdkj hfiushf iehfwhf iwqjfeo
+            Empower your team with seamless collaboration and efficient
+            workflows that keep projects on track.
           </p>
           <Link href="/onboarding">
             <Button size="lg" className="animate-bounce">
