@@ -10,16 +10,19 @@ export async function createIssue(projectId, data) {
     throw new Error("Unauthorized");
   }
 
-  let user = await db.user.findUnique({
+  const user = await db.user.findUnique({
     where: {
       clerkUserId: userId,
     },
   });
 
+  if (!user) {
+    throw new Error("User not found");
+  }
+
   const lastissue = await db.issue.findFirst({
     where: {
       projectId: projectId,
-
       status: data.status,
     },
     orderBy: {
@@ -98,7 +101,7 @@ export async function updateIssueOrder(updateIssues) {
 }
 
 export async function deleteissue(issueId) {
-  const { userId, orgId } = auth();
+  const { userId, orgId, orgRole } = auth();
 
   if (!userId || !orgId) {
     throw new Error("Unauthorized");
@@ -126,7 +129,11 @@ export async function deleteissue(issueId) {
     throw new Error("Issue not found");
   }
 
-  if (issue.reporterId !== user.id && issue.project.adminIds.include(user.id)) {
+  if (issue.project.organizationId !== orgId) {
+    throw new Error("Issue not found");
+  }
+
+  if (issue.reporterId !== user.id && orgRole !== "org:admin") {
     throw new Error("You are not allowed to delete this issue");
   }
 
@@ -209,7 +216,6 @@ export async function getUsersIssues(userId) {
         organizationId: orgId,
       },
     },
-
     include: {
       project: true,
       reporter: true,

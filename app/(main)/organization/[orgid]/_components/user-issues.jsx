@@ -7,7 +7,7 @@ import { Suspense } from "react";
 const UsersIssues = async ({ userId }) => {
   const issues = await getUsersIssues(userId);
 
-  if (issues.legth === 0) {
+  if (!issues || issues.length === 0) {
     return null;
   }
 

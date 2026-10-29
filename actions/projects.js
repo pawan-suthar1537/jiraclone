@@ -60,6 +60,19 @@ export async function getProjects(orgId) {
     throw new Error("User not found");
   }
 
+  const { data: membership } =
+    await clerkClient().organizations.getOrganizationMembershipList({
+      organizationId: orgId,
+    });
+
+  const usermembership = membership.find(
+    (member) => member.publicUserData.userId === userId
+  );
+
+  if (!usermembership) {
+    throw new Error("Unauthorized");
+  }
+
   const project = await db.project.findMany({
     where: {
       organizationId: orgId,

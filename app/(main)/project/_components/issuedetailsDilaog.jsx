@@ -41,12 +41,10 @@ const IssuedetailsDilaog = ({
   const handlestatuschange = async (newstatus) => {
     setstatus(newstatus);
     await updatefn(issue.id, { status: newstatus, priority });
-    window.location.reload(); // Reload the page after deletion
   };
   const handleprioritychange = async (newpriority) => {
     setpriority(newpriority);
     await updatefn(issue.id, { status, priority: newpriority });
-    window.location.reload(); // Reload the page after deletion
   };
 
   const handledelete = () => {

@@ -8,9 +8,10 @@ const Userloading = () => {
   const { isLoaded } = useOrganization();
   const { isLoaded: isuserLoaded } = useUser();
 
-  if (!isLoaded && !isuserLoaded) {
+  if (!isLoaded || !isuserLoaded) {
     return <BarLoader className="mb-4" width={"100%"} color="#36d7b7" />;
-  } else <></>;
+  }
+  return null;
 };
 
 export default Userloading;

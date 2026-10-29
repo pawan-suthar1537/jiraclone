@@ -41,7 +41,7 @@ model Project {
 
 model Sprint {
   id        String        @id @default(cuid())
-  name      String        @unique
+  name      String
   startDate DateTime
   endDate   DateTime
   status    SprintStatus  @default(PLANNED)
@@ -50,6 +50,9 @@ model Sprint {
   issues    Issue[]
   CreatedAt DateTime      @default(now())
   UpdatedAt DateTime      @updatedAt
+
+  @@unique([projectId, name])
+  @@index([projectId])
 }
 
 enum SprintStatus {
@@ -77,6 +80,10 @@ model Issue {
   UpdatedAt  DateTime       @updatedAt
 
   @@index([status, order])
+  @@index([projectId])
+  @@index([sprintId])
+  @@index([reporterId])
+  @@index([assigneeId])
 }
 
 enum IssueStatus {

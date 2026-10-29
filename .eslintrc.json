@@ -1,7 +1,6 @@
 {
   "extends": "next/core-web-vitals",
   "rules": {
-    "no-unused-vars": ["Warn"],
-    "@next-codemod-ignored": true
+    "no-unused-vars": "warn"
   }
 }

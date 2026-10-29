@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/select";
 import useFetch from "@/hooks/use-fetch";
 import { format, formatDistanceToNow, isAfter, isBefore } from "date-fns";
-import { Router } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { BarLoader } from "react-spinners";
@@ -68,7 +67,7 @@ const SprintManager = ({ sprint, sprints, setSprint, projectId }) => {
     const selectsprint = sprints.find((s) => s.id === value);
     setSprint(selectsprint);
     setstatus(selectsprint.status);
-    Router.replace(`/project/${projectId}`, undefined, {
+    router.replace(`/project/${projectId}`, undefined, {
       shallow: true,
     });
   };

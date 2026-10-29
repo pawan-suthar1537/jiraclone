@@ -41,6 +41,11 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
     setfilteredissue(newfilterissues);
   };
 
+  // Keep the filtered list in sync with the source issues when they load or change
+  useEffect(() => {
+    setfilteredissue(issues);
+  }, [issues]);
+
   useEffect(() => {
     if (currSprint.id) {
       getissuesfn(currSprint.id);
@@ -108,7 +113,7 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
     }
 
     const sortedissues = newData.sort((a, b) => a.order - b.order);
-    setissues(newData, sortedissues);
+    setissues(sortedissues);
 
     updateissueorderfn(sortedissues);
   };
@@ -179,14 +184,11 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
                                     getIssueforsprint(currSprint.id)
                                   }
                                   onUpdate={(updated) => {
-                                    setissues((issues) => {
-                                      issues.map((issue) => {
-                                        if (issue.id === updated.id) {
-                                          return updated;
-                                        }
-                                        return issue;
-                                      });
-                                    });
+                                    setissues((issues) =>
+                                      issues.map((issue) =>
+                                        issue.id === updated.id ? updated : issue
+                                      )
+                                    );
                                   }}
                                 />
                               </div>

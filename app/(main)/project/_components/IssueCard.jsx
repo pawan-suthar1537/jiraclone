@@ -33,12 +33,10 @@ const IssueCard = ({
 
   const onDeletehandler = (...params) => {
     onDelete(...params);
-    window.location.reload(); // Reload the page after deletion
   };
 
   const onUpdatehandler = (...params) => {
     onUpdate(...params);
-    window.location.reload(); // Reload the page after deletion
   };
 
   const created = formatDistanceToNow(new Date(issue?.CreatedAt), {

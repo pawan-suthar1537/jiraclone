@@ -74,6 +74,21 @@ export async function updateSprintstatus(sprintId, newstatus) {
       throw new Error("Can only complete an active sprint");
     }
 
+    if (newstatus === "ACTIVE") {
+      const activeSprint = await db.sprint.findFirst({
+        where: {
+          projectId: sprint.projectId,
+          status: "ACTIVE",
+          id: { not: sprintId },
+        },
+      });
+      if (activeSprint) {
+        throw new Error(
+          "Another sprint is already active. End it before starting a new one."
+        );
+      }
+    }
+
     const updatesprint = await db.sprint.update({
       where: {
         id: sprintId,

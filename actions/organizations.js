@@ -31,6 +31,7 @@ export async function getOrganization(slug) {
   const { data: membership } =
     await clerkClient().organizations.getOrganizationMembershipList({
       organizationId: org.id,
+      limit: 500,
     });
 
   const usermembership = membership.find(
@@ -64,6 +65,7 @@ export async function getOrganizationusers(orgId) {
   const organizationmemberships =
     await clerkClient().organizations.getOrganizationMembershipList({
       organizationId: orgId,
+      limit: 500,
     });
 
   const userIds = organizationmemberships.data.map(
