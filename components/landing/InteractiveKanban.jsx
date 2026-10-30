@@ -99,26 +99,31 @@ const initialTasks = [
 ];
 
 const columns = [
-  { id: "todo", label: "To Do", count: 2, dotColor: "bg-zinc-400" },
-  { id: "in_progress", label: "In Progress", count: 2, dotColor: "bg-amber-400", activeGlow: true },
-  { id: "in_review", label: "In Review", count: 1, dotColor: "bg-purple-400" },
-  { id: "done", label: "Done", count: 2, dotColor: "bg-emerald-400" },
+  { id: "todo", label: "To Do", dotColor: "bg-zinc-400" },
+  { id: "in_progress", label: "In Progress", dotColor: "bg-amber-400" },
+  { id: "in_review", label: "In Review", dotColor: "bg-purple-400" },
+  { id: "done", label: "Done", dotColor: "bg-emerald-400" },
 ];
 
 export default function InteractiveKanban() {
   const [filter, setFilter] = useState("all");
+  const [mobileColumn, setMobileColumn] = useState("in_progress");
   const [activeCard, setActiveCard] = useState(null);
   const containerRef = useRef(null);
   const cardContainerRef = useRef(null);
   const badge1Ref = useRef(null);
   const badge2Ref = useRef(null);
 
-  // 3D Parallax tilt on mouse move
+  // 3D Parallax tilt on mouse move (desktop pointer only)
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
+    // Only enable tilt on devices that support hover/fine pointer
+    const isFinePointer = window.matchMedia("(pointer: fine)").matches;
+
     const handleMouseMove = (e) => {
+      if (!isFinePointer) return;
       const rect = container.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
@@ -139,6 +144,7 @@ export default function InteractiveKanban() {
     };
 
     const handleMouseLeave = () => {
+      if (!isFinePointer) return;
       gsap.to(cardContainerRef.current, {
         rotateX: 0,
         rotateY: 0,
@@ -150,7 +156,7 @@ export default function InteractiveKanban() {
     container.addEventListener("mousemove", handleMouseMove);
     container.addEventListener("mouseleave", handleMouseLeave);
 
-    // Continuous subtle floating for micro-badges
+    // Continuous subtle floating for micro-badges (desktop)
     if (badge1Ref.current && badge2Ref.current) {
       gsap.to(badge1Ref.current, {
         y: -8,
@@ -183,15 +189,72 @@ export default function InteractiveKanban() {
     return true;
   });
 
+  const renderTaskCard = (task) => {
+    const isHovered = activeCard === task.id;
+    return (
+      <div
+        key={task.id}
+        onMouseEnter={() => setActiveCard(task.id)}
+        onMouseLeave={() => setActiveCard(null)}
+        className={`group relative rounded-xl border p-3 sm:p-3.5 transition-all duration-200 cursor-pointer ${
+          isHovered
+            ? "border-blue-500/70 bg-zinc-800/95 translate-y-[-2px] shadow-lg shadow-blue-500/10"
+            : "border-zinc-800 bg-zinc-900/80 hover:border-zinc-700"
+        }`}
+      >
+        {/* Card Top: ID & Tag */}
+        <div className="flex items-center justify-between gap-2 mb-2">
+          <span className="text-[11px] font-mono text-zinc-400 group-hover:text-blue-400 transition-colors">
+            {task.id}
+          </span>
+          <span
+            className={`text-[10px] font-medium px-2 py-0.5 rounded-md border ${task.tagColor}`}
+          >
+            {task.tag}
+          </span>
+        </div>
+
+        {/* Card Title */}
+        <p className="text-xs sm:text-sm font-medium text-zinc-200 leading-snug mb-3">
+          {task.title}
+        </p>
+
+        {/* Card Footer: Priority & Assignee Avatar */}
+        <div className="flex items-center justify-between pt-2 border-t border-zinc-800/60 text-[11px]">
+          <div className="flex items-center gap-1.5">
+            <span
+              className={`w-1.5 h-1.5 rounded-full ${
+                task.priority === "Urgent"
+                  ? "bg-rose-400"
+                  : task.priority === "High"
+                  ? "bg-amber-400"
+                  : "bg-blue-400"
+              }`}
+            />
+            <span className="text-zinc-400">{task.priority}</span>
+            <span className="text-zinc-600">&bull;</span>
+            <span className="font-mono text-zinc-400">{task.points} pts</span>
+          </div>
+
+          <img
+            src={task.avatar}
+            alt={task.assignee}
+            className="w-5 h-5 rounded-full ring-1 ring-zinc-700 object-cover"
+          />
+        </div>
+      </div>
+    );
+  };
+
   return (
-    <div ref={containerRef} className="relative w-full max-w-6xl mx-auto py-6 sm:py-10 select-none">
+    <div ref={containerRef} className="relative w-full max-w-6xl mx-auto py-4 sm:py-8 select-none">
       {/* Background glow behind board */}
       <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/20 via-indigo-600/15 to-purple-600/20 blur-3xl -z-10 rounded-3xl opacity-75" />
 
-      {/* Floating 3D Badge 1: Top Left */}
+      {/* Floating 3D Badge 1: Top Left (Desktop) */}
       <div
         ref={badge1Ref}
-        className="absolute -top-3 left-4 sm:-top-5 sm:left-8 z-30 hidden sm:flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-zinc-900/90 border border-blue-500/40 backdrop-blur-xl shadow-xl shadow-blue-950/40"
+        className="absolute -top-3 left-4 sm:-top-5 sm:left-8 z-30 hidden lg:flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-zinc-900/90 border border-blue-500/40 backdrop-blur-xl shadow-xl shadow-blue-950/40"
       >
         <div className="p-2 rounded-xl bg-blue-500/20 text-blue-400">
           <TrendingUp className="w-4 h-4" />
@@ -205,10 +268,10 @@ export default function InteractiveKanban() {
         </div>
       </div>
 
-      {/* Floating 3D Badge 2: Bottom Right */}
+      {/* Floating 3D Badge 2: Bottom Right (Desktop) */}
       <div
         ref={badge2Ref}
-        className="absolute -bottom-4 right-4 sm:-bottom-6 sm:right-8 z-30 hidden sm:flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-zinc-900/90 border border-emerald-500/40 backdrop-blur-xl shadow-xl shadow-emerald-950/40"
+        className="absolute -bottom-4 right-4 sm:-bottom-6 sm:right-8 z-30 hidden lg:flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-zinc-900/90 border border-emerald-500/40 backdrop-blur-xl shadow-xl shadow-emerald-950/40"
       >
         <div className="p-2 rounded-xl bg-emerald-500/20 text-emerald-400">
           <CheckCircle2 className="w-4 h-4" />
@@ -229,28 +292,34 @@ export default function InteractiveKanban() {
         style={{ transformStyle: "preserve-3d" }}
       >
         {/* Window Chrome Header */}
-        <div className="flex flex-wrap items-center justify-between gap-4 px-4 sm:px-6 py-4 border-b border-zinc-800/80 bg-zinc-900/60">
-          {/* Left: Window dots + project title */}
-          <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-3.5 sm:px-6 py-3 sm:py-4 border-b border-zinc-800/80 bg-zinc-900/60">
+          {/* Top row on mobile / Left on desktop */}
+          <div className="flex items-center justify-between sm:justify-start gap-3">
             <div className="flex items-center gap-1.5">
-              <span className="w-3 h-3 rounded-full bg-rose-500/80" />
-              <span className="w-3 h-3 rounded-full bg-amber-500/80" />
-              <span className="w-3 h-3 rounded-full bg-emerald-500/80" />
+              <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-rose-500/80" />
+              <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-amber-500/80" />
+              <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-500/80" />
             </div>
 
-            <div className="hidden sm:flex items-center gap-2 pl-2 border-l border-zinc-800">
+            <div className="flex items-center gap-2 pl-2 border-l border-zinc-800">
               <div className="p-1 rounded bg-blue-500/10 text-blue-400">
-                <Layers className="w-4 h-4" />
+                <Layers className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </div>
-              <span className="text-xs sm:text-sm font-semibold text-white tracking-wide">
+              <span className="text-xs sm:text-sm font-semibold text-white tracking-wide truncate max-w-[130px] sm:max-w-none">
                 Andromeda Core
               </span>
-              <span className="text-xs text-zinc-500 font-mono">v2.4.0</span>
+              <span className="text-[10px] sm:text-xs text-zinc-500 font-mono">v2.4</span>
+            </div>
+
+            {/* Mobile sprint timer pill */}
+            <div className="sm:hidden flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-zinc-900 border border-zinc-800 text-[10px] text-emerald-400 font-mono">
+              <Clock className="w-3 h-3 text-amber-400" />
+              <span>Sprint 14</span>
             </div>
           </div>
 
-          {/* Center: Sprint Timer & Progress */}
-          <div className="flex items-center gap-3 px-3 py-1.5 rounded-full bg-zinc-900 border border-zinc-800 text-xs">
+          {/* Center: Sprint Timer & Progress (Desktop) */}
+          <div className="hidden sm:flex items-center gap-3 px-3 py-1.5 rounded-full bg-zinc-900 border border-zinc-800 text-xs">
             <Clock className="w-3.5 h-3.5 text-amber-400" />
             <span className="text-zinc-300 font-medium">Sprint 14</span>
             <span className="text-zinc-500">&bull;</span>
@@ -258,7 +327,7 @@ export default function InteractiveKanban() {
           </div>
 
           {/* Right: Interactive Filters */}
-          <div className="flex items-center gap-1.5 overflow-x-auto text-xs">
+          <div className="flex items-center gap-1 overflow-x-auto text-[11px] sm:text-xs pb-1 sm:pb-0 scrollbar-none">
             {[
               { id: "all", label: "All" },
               { id: "in_progress", label: "In Progress" },
@@ -268,7 +337,7 @@ export default function InteractiveKanban() {
               <button
                 key={tab.id}
                 onClick={() => setFilter(tab.id)}
-                className={`px-3 py-1 rounded-lg font-medium transition-all ${
+                className={`px-2.5 py-1 rounded-lg font-medium whitespace-nowrap transition-all ${
                   filter === tab.id
                     ? "bg-blue-600 text-white shadow-sm shadow-blue-500/30"
                     : "text-zinc-400 hover:text-white hover:bg-zinc-800/80"
@@ -280,9 +349,49 @@ export default function InteractiveKanban() {
           </div>
         </div>
 
-        {/* Kanban Board Columns View */}
-        <div className="p-4 sm:p-6 bg-zinc-950/70 overflow-x-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 min-w-[680px] lg:min-w-0">
+        {/* MOBILE COLUMN SELECTOR TABS (< sm breakpoint) */}
+        <div className="sm:hidden flex items-center gap-1.5 p-2 bg-zinc-900/90 border-b border-zinc-800/80 overflow-x-auto scrollbar-none">
+          {columns.map((col) => {
+            const count = filteredTasks.filter((t) => t.status === col.id).length;
+            const isSelected = mobileColumn === col.id;
+            return (
+              <button
+                key={col.id}
+                onClick={() => setMobileColumn(col.id)}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all ${
+                  isSelected
+                    ? "bg-zinc-800 text-white border border-zinc-700 shadow-sm"
+                    : "text-zinc-400 hover:text-zinc-200"
+                }`}
+              >
+                <span className={`w-2 h-2 rounded-full ${col.dotColor}`} />
+                <span>{col.label}</span>
+                <span className="text-[10px] font-mono px-1.5 py-0.2 rounded-full bg-zinc-900 text-zinc-400">
+                  {count}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* MOBILE SINGLE-COLUMN VIEW (< sm breakpoint) */}
+        <div className="sm:hidden p-3.5 bg-zinc-950/70 min-h-[280px]">
+          {(() => {
+            const colTasks = filteredTasks.filter((t) => t.status === mobileColumn);
+            if (colTasks.length === 0) {
+              return (
+                <div className="h-36 flex items-center justify-center rounded-xl border border-dashed border-zinc-800/80 text-xs text-zinc-500">
+                  No issues in this column
+                </div>
+              );
+            }
+            return <div className="space-y-2.5">{colTasks.map(renderTaskCard)}</div>;
+          })()}
+        </div>
+
+        {/* TABLET & DESKTOP 4-COLUMN GRID (>= sm breakpoint) */}
+        <div className="hidden sm:block p-4 sm:p-6 bg-zinc-950/70 overflow-x-auto">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 min-w-[580px] lg:min-w-0">
             {columns.map((col) => {
               const colTasks = filteredTasks.filter((t) => t.status === col.id);
               return (
@@ -303,69 +412,14 @@ export default function InteractiveKanban() {
                     </span>
                   </div>
 
-                  {/* Task Cards in this Column */}
+                  {/* Task Cards */}
                   <div className="space-y-2.5 flex-1">
                     {colTasks.length === 0 ? (
                       <div className="h-28 flex items-center justify-center rounded-lg border border-dashed border-zinc-800/60 text-xs text-zinc-600">
                         No issues matching
                       </div>
                     ) : (
-                      colTasks.map((task) => {
-                        const isHovered = activeCard === task.id;
-                        return (
-                          <div
-                            key={task.id}
-                            onMouseEnter={() => setActiveCard(task.id)}
-                            onMouseLeave={() => setActiveCard(null)}
-                            className={`group relative rounded-xl border p-3 transition-all duration-200 cursor-pointer ${
-                              isHovered
-                                ? "border-blue-500/70 bg-zinc-800/90 translate-y-[-2px] shadow-lg shadow-blue-500/10"
-                                : "border-zinc-800 bg-zinc-900/80 hover:border-zinc-700"
-                            }`}
-                          >
-                            {/* Card Top: ID & Tag */}
-                            <div className="flex items-center justify-between gap-2 mb-2">
-                              <span className="text-[11px] font-mono text-zinc-400 group-hover:text-blue-400 transition-colors">
-                                {task.id}
-                              </span>
-                              <span
-                                className={`text-[10px] font-medium px-2 py-0.5 rounded-md border ${task.tagColor}`}
-                              >
-                                {task.tag}
-                              </span>
-                            </div>
-
-                            {/* Card Title */}
-                            <p className="text-xs font-medium text-zinc-200 leading-snug mb-3">
-                              {task.title}
-                            </p>
-
-                            {/* Card Footer: Priority & Assignee Avatar */}
-                            <div className="flex items-center justify-between pt-2 border-t border-zinc-800/60 text-[11px]">
-                              <div className="flex items-center gap-1.5">
-                                <span
-                                  className={`w-1.5 h-1.5 rounded-full ${
-                                    task.priority === "Urgent"
-                                      ? "bg-rose-400"
-                                      : task.priority === "High"
-                                      ? "bg-amber-400"
-                                      : "bg-blue-400"
-                                  }`}
-                                />
-                                <span className="text-zinc-400">{task.priority}</span>
-                                <span className="text-zinc-600">&bull;</span>
-                                <span className="font-mono text-zinc-400">{task.points} pts</span>
-                              </div>
-
-                              <img
-                                src={task.avatar}
-                                alt={task.assignee}
-                                className="w-5 h-5 rounded-full ring-1 ring-zinc-700 object-cover"
-                              />
-                            </div>
-                          </div>
-                        );
-                      })
+                      colTasks.map(renderTaskCard)
                     )}
                   </div>
                 </div>

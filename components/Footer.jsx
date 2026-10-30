@@ -14,22 +14,22 @@ export default function Footer() {
       {/* Subtle top glow line */}
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-12">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-10 lg:gap-12">
           {/* Brand info */}
-          <div className="lg:col-span-2 space-y-4">
+          <div className="col-span-2 lg:col-span-2 space-y-4">
             <Link href="/" className="inline-flex items-center gap-3 group">
               <div className="p-1 rounded-lg bg-zinc-900 border border-zinc-800 group-hover:border-blue-500/50 transition-colors">
                 <Image
                   src="/logo.png"
                   alt="iconScrum"
-                  width={140}
-                  height={40}
-                  className="h-8 w-auto object-contain"
+                  width={130}
+                  height={36}
+                  className="h-7 sm:h-8 w-auto object-contain"
                 />
               </div>
             </Link>
-            <p className="text-sm text-zinc-400 max-w-sm leading-relaxed">
+            <p className="text-xs sm:text-sm text-zinc-400 max-w-sm leading-relaxed">
               Next-generation agile project management built for high-velocity software teams. Plan sprints, track issues, and ship quality code faster.
             </p>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-400">
@@ -42,11 +42,11 @@ export default function Footer() {
           </div>
 
           {/* Product links */}
-          <div>
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-zinc-200 mb-4 flex items-center gap-2">
+          <div className="col-span-1">
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-zinc-200 mb-3 sm:mb-4 flex items-center gap-1.5">
               <Sparkles className="w-3.5 h-3.5 text-blue-400" /> Product
             </h4>
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-2 sm:space-y-2.5 text-xs sm:text-sm">
               <li>
                 <Link href="/#features" className="text-zinc-400 hover:text-white transition-colors">
                   Key Features
@@ -71,11 +71,11 @@ export default function Footer() {
           </div>
 
           {/* Company links */}
-          <div>
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-zinc-200 mb-4">
+          <div className="col-span-1">
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-zinc-200 mb-3 sm:mb-4">
               Company
             </h4>
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-2 sm:space-y-2.5 text-xs sm:text-sm">
               <li>
                 <Link href="/about" className="text-zinc-400 hover:text-white transition-colors">
                   About iconScrum
@@ -83,7 +83,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/contact" className="text-zinc-400 hover:text-white transition-colors">
-                  Contact & Feedback
+                  Contact Us
                 </Link>
               </li>
               <li>
@@ -91,20 +91,20 @@ export default function Footer() {
                   href="https://portfolio-nine-inky-66.vercel.app/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-zinc-400 hover:text-white transition-colors flex items-center gap-1"
+                  className="text-zinc-400 hover:text-white transition-colors"
                 >
-                  Developer Portfolio
+                  Portfolio
                 </Link>
               </li>
             </ul>
           </div>
 
           {/* Legal links */}
-          <div>
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-zinc-200 mb-4 flex items-center gap-2">
+          <div className="col-span-2 sm:col-span-1">
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-zinc-200 mb-3 sm:mb-4 flex items-center gap-1.5">
               <ShieldCheck className="w-3.5 h-3.5 text-purple-400" /> Trust & Legal
             </h4>
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-2 sm:space-y-2.5 text-xs sm:text-sm">
               <li>
                 <Link href="/privacy" className="text-zinc-400 hover:text-white transition-colors">
                   Privacy Policy
@@ -120,14 +120,14 @@ export default function Footer() {
         </div>
 
         {/* Bottom divider and sub-footer */}
-        <div className="mt-12 pt-8 border-t border-zinc-800/80 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-zinc-500">
-            &copy; {new Date().getFullYear()} <span className="text-zinc-400 font-medium">iconScrum</span>. Empowering agile engineering teams worldwide.
+        <div className="mt-10 sm:mt-12 pt-6 sm:pt-8 border-t border-zinc-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+          <p className="text-xs text-zinc-500 order-2 sm:order-1">
+            &copy; {new Date().getFullYear()} <span className="text-zinc-400 font-medium">iconScrum</span>. Empowering agile teams.
           </p>
 
-          <div className="flex items-center gap-1.5 text-xs text-zinc-400">
+          <div className="flex items-center gap-1.5 text-xs text-zinc-400 order-1 sm:order-2">
             <span>Crafted with</span>
-            <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500 inline" />
+           
             <span>by</span>
             <Link
               href="https://portfolio-nine-inky-66.vercel.app/"
@@ -139,7 +139,7 @@ export default function Footer() {
             </Link>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 order-3">
             <Link
               href="https://github.com/pawan-suthar1537"
               target="_blank"

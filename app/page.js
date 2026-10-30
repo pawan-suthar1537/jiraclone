@@ -321,23 +321,23 @@ export default function Home() {
       </div>
 
       {/* 1. HERO SECTION */}
-      <section className="relative pt-12 sm:pt-20 pb-16 sm:pb-24">
+      <section className="relative pt-8 sm:pt-16 lg:pt-20 pb-12 sm:pb-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl text-center">
           {/* Animated Announcement Pill */}
-          <div ref={heroBadgeRef} className="inline-flex items-center gap-2 mb-6">
-            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 backdrop-blur-md text-xs sm:text-sm text-blue-300 shadow-sm shadow-blue-500/20">
-              <span className="flex h-2 w-2 rounded-full bg-blue-400 animate-pulse" />
+          <div ref={heroBadgeRef} className="inline-flex items-center justify-center mb-5 sm:mb-6">
+            <span className="inline-flex items-center gap-1.5 sm:gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 backdrop-blur-md text-xs sm:text-sm text-blue-300 shadow-sm shadow-blue-500/20 max-w-full">
+              <span className="flex h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-blue-400 animate-pulse shrink-0" />
               <span className="font-semibold text-white">iconScrum 2.0</span>
-              <span className="text-blue-400/80">&bull;</span>
-              <span>Next-Gen Agile Project & Sprint Platform</span>
-              <ArrowRight className="w-3.5 h-3.5 text-blue-400" />
+              <span className="text-blue-400/80 hidden xs:inline">&bull;</span>
+              <span className="truncate">Next-Gen Agile Platform</span>
+              <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-blue-400 shrink-0" />
             </span>
           </div>
 
           {/* Main Hero Headline */}
           <h1
             ref={heroTitleRef}
-            className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.08] mb-6"
+            className="text-3xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.15] mb-5 sm:mb-6"
           >
             Ship faster with{" "}
             <span className="bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">
@@ -349,7 +349,7 @@ export default function Home() {
           {/* Subtitle Description */}
           <p
             ref={heroDescRef}
-            className="text-lg sm:text-xl text-zinc-300 max-w-3xl mx-auto mb-10 leading-relaxed"
+            className="text-sm sm:text-lg lg:text-xl text-zinc-300 max-w-3xl mx-auto mb-8 sm:mb-10 leading-relaxed px-1 sm:px-0"
           >
             The agile sprint management and issue tracking workspace engineered
             for high-velocity engineering teams. Plan sprints, triage issues,
@@ -359,12 +359,12 @@ export default function Home() {
           {/* Call to Action Buttons */}
           <div
             ref={heroActionsRef}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10"
+            className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 mb-8 sm:mb-10 max-w-md sm:max-w-none mx-auto"
           >
             <Link href="/onboarding" className="w-full sm:w-auto">
               <Button
                 size="lg"
-                className="w-full sm:w-auto h-12 px-8 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-base shadow-lg shadow-blue-500/25 transition-all hover:scale-[1.02]"
+                className="w-full sm:w-auto h-11 sm:h-12 px-6 sm:px-8 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-sm sm:text-base shadow-lg shadow-blue-500/25 transition-all hover:scale-[1.02]"
               >
                 <span>Start Free Trial</span>
                 <ArrowRight className="ml-2 h-4 w-4" />
@@ -374,10 +374,10 @@ export default function Home() {
               <Button
                 size="lg"
                 variant="outline"
-                className="w-full sm:w-auto h-12 px-7 border-zinc-700/80 bg-zinc-900/60 hover:bg-zinc-800 text-zinc-200 font-medium text-base backdrop-blur-sm"
+                className="w-full sm:w-auto h-11 sm:h-12 px-5 sm:px-7 border-zinc-700/80 bg-zinc-900/60 hover:bg-zinc-800 text-zinc-200 font-medium text-sm sm:text-base backdrop-blur-sm"
               >
                 <Sparkles className="mr-2 h-4 w-4 text-blue-400" />
-                <span>Explore Interactive Demo</span>
+                <span>Explore Live Demo</span>
               </Button>
             </Link>
           </div>
@@ -385,24 +385,24 @@ export default function Home() {
           {/* Trust Guarantees */}
           <div
             ref={heroTrustRef}
-            className="flex flex-wrap items-center justify-center gap-6 text-xs sm:text-sm text-zinc-400"
+            className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs sm:text-sm text-zinc-400"
           >
-            <span className="flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+            <span className="flex items-center gap-1.5 sm:gap-2">
+              <CheckCircle2 className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-emerald-400 shrink-0" />
               Free for growing teams
             </span>
-            <span className="flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+            <span className="flex items-center gap-1.5 sm:gap-2">
+              <CheckCircle2 className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-emerald-400 shrink-0" />
               No credit card required
             </span>
-            <span className="flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-              Instant 60-second setup
+            <span className="flex items-center gap-1.5 sm:gap-2">
+              <CheckCircle2 className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-emerald-400 shrink-0" />
+              Instant 60s setup
             </span>
           </div>
 
           {/* 2. SHOWCASE: INTERACTIVE 3D KANBAN BOARD */}
-          <div id="preview" className="mt-12 sm:mt-16">
+          <div id="preview" className="mt-8 sm:mt-14">
             <InteractiveKanban />
           </div>
         </div>
@@ -411,19 +411,19 @@ export default function Home() {
       {/* 3. METRICS / STATS SECTION */}
       <section
         ref={statsRef}
-        className="border-y border-zinc-800/80 bg-zinc-950/60 backdrop-blur-md py-14"
+        className="border-y border-zinc-800/80 bg-zinc-950/60 backdrop-blur-md py-10 sm:py-14"
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
             {stats.map((stat, idx) => (
               <div key={idx} className="stat-item text-center space-y-1">
-                <div className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight bg-gradient-to-br from-white via-zinc-200 to-zinc-400 bg-clip-text text-transparent font-mono">
+                <div className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight bg-gradient-to-br from-white via-zinc-200 to-zinc-400 bg-clip-text text-transparent font-mono">
                   {stat.value}
                 </div>
-                <div className="text-sm font-semibold text-zinc-200">
+                <div className="text-xs sm:text-sm font-semibold text-zinc-200">
                   {stat.label}
                 </div>
-                <div className="text-xs text-blue-400 font-medium">
+                <div className="text-[11px] sm:text-xs text-blue-400 font-medium">
                   {stat.change}
                 </div>
               </div>
@@ -433,9 +433,9 @@ export default function Home() {
       </section>
 
       {/* 4. TRUSTED BY TOP TECH COMPANIES */}
-      <section className="py-16 sm:py-20 border-b border-zinc-800/50">
+      <section className="py-12 sm:py-16 lg:py-20 border-b border-zinc-800/50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl text-center">
-          <p className="text-xs sm:text-sm uppercase tracking-widest text-zinc-400 font-semibold mb-8">
+          <p className="text-[11px] sm:text-xs md:text-sm uppercase tracking-widest text-zinc-400 font-semibold mb-6 sm:mb-8 px-2">
             Empowering modern engineering teams at forward-thinking companies
           </p>
           <Companycarousel />
@@ -443,31 +443,31 @@ export default function Home() {
       </section>
 
       {/* 5. CORE FEATURES BENTO GRID */}
-      <section id="features" ref={featuresRef} className="py-24 sm:py-32">
+      <section id="features" ref={featuresRef} className="py-16 sm:py-24 lg:py-32">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-          <div className="max-w-3xl mx-auto text-center mb-16 space-y-4">
+          <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16 space-y-3 sm:space-y-4">
             <Badge
               variant="outline"
               className="border-blue-500/30 bg-blue-500/10 text-blue-400 px-3 py-1 text-xs"
             >
               <Sparkles className="w-3.5 h-3.5 mr-1.5" /> Engineered for Speed
             </Badge>
-            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
               Everything your team needs to ship on schedule
             </h2>
-            <p className="text-base sm:text-lg text-zinc-400 leading-relaxed">
+            <p className="text-sm sm:text-base lg:text-lg text-zinc-400 leading-relaxed px-1">
               Ditch slow loading times and endless configuration submenus. iconScrum
               focuses entirely on what keeps your sprint velocity peaking.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
             {features.map((feature, idx) => {
               const Icon = feature.icon;
               return (
                 <Card
                   key={idx}
-                  className={`feature-card group relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/50 backdrop-blur-md p-6 sm:p-7 transition-all duration-300 hover:translate-y-[-4px] hover:shadow-xl hover:shadow-black/50 ${feature.borderGlow}`}
+                  className={`feature-card group relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/50 backdrop-blur-md p-5 sm:p-7 transition-all duration-300 hover:translate-y-[-4px] hover:shadow-xl hover:shadow-black/50 ${feature.borderGlow}`}
                 >
                   {/* Subtle hover gradient background */}
                   <div
@@ -476,25 +476,25 @@ export default function Home() {
 
                   <div className="relative z-10 flex flex-col h-full justify-between">
                     <div>
-                      <div className="flex items-center justify-between mb-5">
+                      <div className="flex items-center justify-between mb-4 sm:mb-5">
                         <div
-                          className={`p-3 rounded-xl bg-zinc-950/80 border border-zinc-800/80 ${feature.iconColor} group-hover:scale-110 transition-transform duration-300`}
+                          className={`p-2.5 sm:p-3 rounded-xl bg-zinc-950/80 border border-zinc-800/80 ${feature.iconColor} group-hover:scale-110 transition-transform duration-300`}
                         >
-                          <Icon className="w-6 h-6" />
+                          <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
                         </div>
-                        <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-zinc-800/70 text-zinc-400 border border-zinc-700/60">
+                        <span className="text-[10px] sm:text-[11px] font-mono px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-zinc-800/70 text-zinc-400 border border-zinc-700/60">
                           {feature.badge}
                         </span>
                       </div>
-                      <h3 className="text-lg font-bold text-white mb-2 group-hover:text-blue-200 transition-colors">
+                      <h3 className="text-base sm:text-lg font-bold text-white mb-2 group-hover:text-blue-200 transition-colors">
                         {feature.title}
                       </h3>
-                      <p className="text-sm text-zinc-400 leading-relaxed">
+                      <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
                         {feature.description}
                       </p>
                     </div>
 
-                    <div className="pt-5 mt-4 border-t border-zinc-800/60 flex items-center text-xs text-zinc-400 group-hover:text-white transition-colors">
+                    <div className="pt-4 sm:pt-5 mt-4 border-t border-zinc-800/60 flex items-center text-xs text-zinc-400 group-hover:text-white transition-colors">
                       <span>Learn sprint workflow</span>
                       <ChevronRight className="w-3.5 h-3.5 ml-1 transition-transform group-hover:translate-x-1" />
                     </div>
@@ -510,41 +510,41 @@ export default function Home() {
       <section
         id="workflow"
         ref={workflowRef}
-        className="py-24 sm:py-32 border-t border-zinc-800/80 bg-zinc-950/70 relative overflow-hidden"
+        className="py-16 sm:py-24 lg:py-32 border-t border-zinc-800/80 bg-zinc-950/70 relative overflow-hidden"
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-          <div className="max-w-3xl mx-auto text-center mb-16 space-y-4">
+          <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16 space-y-3 sm:space-y-4">
             <Badge
               variant="outline"
               className="border-indigo-500/30 bg-indigo-500/10 text-indigo-400 px-3 py-1 text-xs"
             >
               <Workflow className="w-3.5 h-3.5 mr-1.5" /> Seamless Lifecycle
             </Badge>
-            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
               From Backlog to Production in 4 Simple Steps
             </h2>
-            <p className="text-base sm:text-lg text-zinc-400 leading-relaxed">
+            <p className="text-sm sm:text-base lg:text-lg text-zinc-400 leading-relaxed px-1">
               Eliminate friction at every stage of your delivery cycle with clean,
               purpose-built sprint mechanics.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 relative">
             {workflowSteps.map((step, idx) => (
               <div
                 key={idx}
-                className="workflow-card relative rounded-2xl border border-zinc-800/90 bg-zinc-900/60 p-6 flex flex-col justify-between hover:border-zinc-700 transition-colors"
+                className="workflow-card relative rounded-2xl border border-zinc-800/90 bg-zinc-900/60 p-5 sm:p-6 flex flex-col justify-between hover:border-zinc-700 transition-colors"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center justify-between mb-3 sm:mb-4">
                     <span
-                      className={`text-3xl font-extrabold font-mono ${step.accent}`}
+                      className={`text-2xl sm:text-3xl font-extrabold font-mono ${step.accent}`}
                     >
                       {step.step}
                     </span>
                     <span className="w-2 h-2 rounded-full bg-zinc-700" />
                   </div>
-                  <h3 className="text-base font-bold text-white mb-2">
+                  <h3 className="text-sm sm:text-base font-bold text-white mb-2">
                     {step.title}
                   </h3>
                   <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
@@ -552,7 +552,7 @@ export default function Home() {
                   </p>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-zinc-800/60 flex items-center gap-1.5 text-xs text-zinc-400">
+                <div className="mt-5 sm:mt-6 pt-3 sm:pt-4 border-t border-zinc-800/60 flex items-center gap-1.5 text-xs text-zinc-400">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
                   <span>Automated Sync</span>
                 </div>
@@ -563,45 +563,45 @@ export default function Home() {
       </section>
 
       {/* 7. CUSTOMER TESTIMONIALS */}
-      <section className="py-24 sm:py-32 border-t border-zinc-800/80">
+      <section className="py-16 sm:py-24 lg:py-32 border-t border-zinc-800/80">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-          <div className="max-w-2xl mx-auto text-center mb-16 space-y-4">
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+          <div className="max-w-2xl mx-auto text-center mb-12 sm:mb-16 space-y-3 sm:space-y-4">
+            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white">
               Trusted by engineering leaders
             </h2>
-            <p className="text-base text-zinc-400">
+            <p className="text-sm sm:text-base text-zinc-400">
               Discover why high-performing software teams switched to iconScrum.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
             {testimonials.map((t, idx) => (
               <Card
                 key={idx}
-                className="rounded-2xl border border-zinc-800/80 bg-zinc-900/50 backdrop-blur-md p-6 sm:p-7 flex flex-col justify-between hover:border-zinc-700 transition-colors"
+                className="rounded-2xl border border-zinc-800/80 bg-zinc-900/50 backdrop-blur-md p-5 sm:p-7 flex flex-col justify-between hover:border-zinc-700 transition-colors"
               >
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                   <div className="flex gap-1 text-amber-400">
                     {[...Array(5)].map((_, i) => (
                       <span key={i} className="text-sm">★</span>
                     ))}
                   </div>
-                  <p className="text-sm sm:text-base text-zinc-300 leading-relaxed italic">
+                  <p className="text-xs sm:text-sm lg:text-base text-zinc-300 leading-relaxed italic">
                     &ldquo;{t.quote}&rdquo;
                   </p>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-zinc-800/80 flex items-center gap-3">
+                <div className="mt-5 sm:mt-6 pt-4 border-t border-zinc-800/80 flex items-center gap-3">
                   <img
                     src={t.avatar}
                     alt={t.author}
-                    className="w-10 h-10 rounded-full object-cover ring-2 ring-zinc-700"
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover ring-2 ring-zinc-700 shrink-0"
                   />
                   <div>
-                    <div className="text-sm font-semibold text-white">
+                    <div className="text-xs sm:text-sm font-semibold text-white">
                       {t.author}
                     </div>
-                    <div className="text-xs text-zinc-400">
+                    <div className="text-[11px] sm:text-xs text-zinc-400">
                       {t.role} &bull; {t.company}
                     </div>
                   </div>
@@ -616,43 +616,43 @@ export default function Home() {
       <section
         id="faq"
         ref={faqRef}
-        className="py-24 sm:py-32 border-t border-zinc-800/80 bg-zinc-950/60"
+        className="py-16 sm:py-24 lg:py-32 border-t border-zinc-800/80 bg-zinc-950/60"
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-          <div className="text-center mb-14 space-y-4">
+          <div className="text-center mb-10 sm:mb-14 space-y-3 sm:space-y-4">
             <Badge
               variant="outline"
               className="border-purple-500/30 bg-purple-500/10 text-purple-400 px-3 py-1 text-xs"
             >
               <MessageSquare className="w-3.5 h-3.5 mr-1.5" /> Answers on Demand
             </Badge>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white">
               Frequently Asked Questions
             </h2>
-            <p className="text-sm sm:text-base text-zinc-400 max-w-xl mx-auto">
+            <p className="text-xs sm:text-sm md:text-base text-zinc-400 max-w-xl mx-auto px-2">
               Everything you need to know about setting up iconScrum, managing
               sprints, and onboarding your developers.
             </p>
           </div>
 
-          <Accordion type="single" collapsible className="w-full space-y-4">
+          <Accordion type="single" collapsible className="w-full space-y-3 sm:space-y-4">
             {faqs.map((faq, idx) => (
               <AccordionItem
                 key={idx}
                 value={`faq-${idx}`}
-                className="rounded-2xl border border-zinc-800/90 bg-zinc-900/50 px-5 sm:px-6 py-1 data-[state=open]:border-zinc-700 transition-colors"
+                className="rounded-2xl border border-zinc-800/90 bg-zinc-900/50 px-4 sm:px-6 py-0.5 sm:py-1 data-[state=open]:border-zinc-700 transition-colors"
               >
-                <AccordionTrigger className="text-left text-sm sm:text-base font-semibold text-zinc-200 hover:text-white hover:no-underline py-4">
+                <AccordionTrigger className="text-left text-xs sm:text-base font-semibold text-zinc-200 hover:text-white hover:no-underline py-3.5 sm:py-4">
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-xs sm:text-sm text-zinc-400 leading-relaxed pb-4 pt-1">
+                <AccordionContent className="text-xs sm:text-sm text-zinc-400 leading-relaxed pb-3.5 sm:pb-4 pt-1">
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>
 
-          <div className="mt-10 text-center">
+          <div className="mt-8 sm:mt-10 text-center">
             <p className="text-xs sm:text-sm text-zinc-400">
               Have another question not answered above?{" "}
               <Link
@@ -667,38 +667,38 @@ export default function Home() {
       </section>
 
       {/* 9. HIGH-CONVERSION FINAL CALL TO ACTION */}
-      <section className="py-20 sm:py-32">
+      <section className="py-16 sm:py-24 lg:py-32">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
           <div
             ref={ctaRef}
-            className="relative overflow-hidden rounded-3xl border border-blue-500/30 bg-gradient-to-br from-blue-950/40 via-zinc-900/90 to-purple-950/40 p-8 sm:p-14 lg:p-16 text-center shadow-2xl shadow-blue-950/40"
+            className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-blue-500/30 bg-gradient-to-br from-blue-950/40 via-zinc-900/90 to-purple-950/40 p-6 sm:p-12 lg:p-16 text-center shadow-2xl shadow-blue-950/40"
           >
             {/* Radial glow background */}
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.25),transparent_65%)] pointer-events-none" />
 
-            <div className="relative z-10 max-w-2xl mx-auto space-y-6">
+            <div className="relative z-10 max-w-2xl mx-auto space-y-4 sm:space-y-6">
               <Badge
                 variant="outline"
-                className="border-blue-400/30 bg-blue-500/10 text-blue-300 px-3.5 py-1 text-xs"
+                className="border-blue-400/30 bg-blue-500/10 text-blue-300 px-3 py-1 text-xs"
               >
                 <Sparkles className="w-3.5 h-3.5 mr-1.5" /> High-Velocity Agile
               </Badge>
 
-              <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+              <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
                 Ready to take your sprint delivery to the next level?
               </h2>
 
-              <p className="text-base sm:text-lg text-zinc-300 leading-relaxed">
+              <p className="text-sm sm:text-base lg:text-lg text-zinc-300 leading-relaxed px-1">
                 Join thousands of software engineers already using iconScrum to
                 ship better software without the chaos. Set up your workspace in
                 60 seconds.
               </p>
 
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 pt-2 sm:pt-4 max-w-md sm:max-w-none mx-auto">
                 <Link href="/onboarding" className="w-full sm:w-auto">
                   <Button
                     size="lg"
-                    className="w-full sm:w-auto h-12 px-8 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-base shadow-lg shadow-blue-500/30"
+                    className="w-full sm:w-auto h-11 sm:h-12 px-6 sm:px-8 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm sm:text-base shadow-lg shadow-blue-500/30"
                   >
                     <span>Start Using iconScrum Free</span>
                     <ArrowRight className="ml-2 h-4 w-4" />
@@ -708,14 +708,14 @@ export default function Home() {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="w-full sm:w-auto h-12 px-7 border-zinc-700 bg-zinc-900/60 hover:bg-zinc-800 text-zinc-200 font-medium text-base"
+                    className="w-full sm:w-auto h-11 sm:h-12 px-5 sm:px-7 border-zinc-700 bg-zinc-900/60 hover:bg-zinc-800 text-zinc-200 font-medium text-sm sm:text-base"
                   >
                     <span>Sign In to Existing Project</span>
                   </Button>
                 </Link>
               </div>
 
-              <div className="pt-6 flex flex-wrap items-center justify-center gap-6 text-xs text-zinc-400">
+              <div className="pt-4 sm:pt-6 flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs text-zinc-400">
                 <span className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
                   Free for up to 10 users

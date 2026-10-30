@@ -95,39 +95,39 @@ export default function PrivacyPage() {
         </Link>
 
         {/* Header */}
-        <div className="mb-12 space-y-4">
+        <div className="mb-10 sm:mb-12 space-y-3 sm:space-y-4">
           <Badge variant="outline" className="border-blue-500/30 bg-blue-500/10 text-blue-400 px-3 py-1 text-xs">
             <Shield className="w-3.5 h-3.5 mr-1.5" /> Legal & Privacy
           </Badge>
-          <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white">
+          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
             Privacy Policy
           </h1>
-          <p className="text-sm text-zinc-400">
+          <p className="text-xs sm:text-sm text-zinc-400">
             Last updated: <span className="text-zinc-200">{lastUpdated}</span>
           </p>
-          <p className="text-base text-zinc-300 max-w-2xl leading-relaxed">
+          <p className="text-sm sm:text-base text-zinc-300 max-w-2xl leading-relaxed">
             Your privacy and project confidentiality are foundational to iconScrum. This policy details our transparent data handling principles.
           </p>
         </div>
 
         {/* Content Sections */}
-        <div className="space-y-6">
+        <div className="space-y-5 sm:space-y-6">
           {sections.map((section, idx) => {
             const Icon = section.icon;
             return (
               <div
                 key={idx}
-                className="rounded-2xl border border-zinc-800/80 bg-zinc-900/50 backdrop-blur-sm p-6 sm:p-8 transition-colors hover:border-zinc-700/80"
+                className="rounded-2xl border border-zinc-800/80 bg-zinc-900/50 backdrop-blur-sm p-5 sm:p-8 transition-colors hover:border-zinc-700/80"
               >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400">
-                    <Icon className="w-5 h-5" />
+                <div className="flex items-center gap-3 mb-3 sm:mb-4">
+                  <div className="p-2 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 shrink-0">
+                    <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
-                  <h2 className="text-xl font-bold text-white tracking-tight">
+                  <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight">
                     {section.title}
                   </h2>
                 </div>
-                <div className="text-sm sm:text-base leading-relaxed pl-1 sm:pl-11">
+                <div className="text-xs sm:text-base leading-relaxed pl-0 sm:pl-11">
                   {section.content}
                 </div>
               </div>
