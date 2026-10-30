@@ -1,358 +1,731 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+"use client";
+
+import { useEffect, useRef } from "react";
+import Link from "next/link";
 import {
   ArrowRight,
   CheckCircle2,
   Zap,
-  Shield,
-  BarChart3,
-  Users,
-  Workflow,
   Target,
-  Github,
-  Twitter,
-  Linkedin,
+  Workflow,
+  Users,
+  BarChart3,
+  ShieldCheck,
+  Sparkles,
+  ChevronRight,
+  Flame,
+  TrendingUp,
+  Layers,
+  ArrowUpRight,
+  MessageSquare,
+  Clock,
+  Play
 } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import Companycarousel from "@/components/Companycarousel";
+import InteractiveKanban from "@/components/landing/InteractiveKanban";
+import faqs from "@/data/faqs";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 const features = [
   {
-    title: "Issue Tracking",
+    title: "Sprint & Backlog Management",
     description:
-      "Track bugs, tasks, and stories with custom workflows. Every issue has full history and context.",
-    icon: Target,
-    accent: "from-blue-500/20 to-blue-500/5",
-  },
-  {
-    title: "Sprint Planning",
-    description:
-      "Plan work in time-boxed sprints. Start, monitor, and close sprints with clear boundaries.",
+      "Plan time-boxed sprints with capacity metrics, custom story points, and sprint goals. Move backlog items into active sprints with zero friction.",
     icon: Workflow,
-    accent: "from-emerald-500/20 to-emerald-500/5",
+    accent: "from-blue-500/20 via-blue-500/5 to-transparent",
+    borderGlow: "group-hover:border-blue-500/50",
+    iconColor: "text-blue-400",
+    badge: "Agile Core",
   },
   {
-    title: "Team Collaboration",
+    title: "Precision Issue Tracking",
     description:
-      "Assign work, mention teammates, and track changes. Everyone stays in sync automatically.",
-    icon: Users,
-    accent: "from-violet-500/20 to-violet-500/5",
+      "Log bugs, stories, and tasks with rich markdown descriptions. Set granular priorities (Urgent, High, Medium, Low) and assign team members instantly.",
+    icon: Target,
+    accent: "from-indigo-500/20 via-indigo-500/5 to-transparent",
+    borderGlow: "group-hover:border-indigo-500/50",
+    iconColor: "text-indigo-400",
+    badge: "Detailed Triage",
   },
   {
-    title: "Analytics",
+    title: "Dynamic Custom Workflows",
     description:
-      "Burndown charts, velocity tracking, and custom reports. Make decisions backed by data.",
-    icon: BarChart3,
-    accent: "from-orange-500/20 to-orange-500/5",
-  },
-  {
-    title: "Custom Workflows",
-    description:
-      "Design workflows that match how your team works. Custom statuses, transitions, and rules.",
+      "Adapt your board to how your engineers ship. Clean transitions between To Do, In Progress, In Review, and Done ensure full team alignment.",
     icon: Zap,
-    accent: "from-pink-500/20 to-pink-500/5",
+    accent: "from-amber-500/20 via-amber-500/5 to-transparent",
+    borderGlow: "group-hover:border-amber-500/50",
+    iconColor: "text-amber-400",
+    badge: "Workflow Automation",
   },
   {
-    title: "Enterprise Security",
+    title: "Real-Time Collaboration",
     description:
-      "Role-based permissions, SSO, and audit logs. Keep your work secure and compliant.",
-    icon: Shield,
-    accent: "from-cyan-500/20 to-cyan-500/5",
+      "Comment on issues, mention teammates, and review status updates live. Keep conversations tethered directly to the code and tickets they affect.",
+    icon: Users,
+    accent: "from-purple-500/20 via-purple-500/5 to-transparent",
+    borderGlow: "group-hover:border-purple-500/50",
+    iconColor: "text-purple-400",
+    badge: "Team Sync",
+  },
+  {
+    title: "Sprint Analytics & Velocity",
+    description:
+      "Monitor burndown charts, track historical velocity, and identify delivery bottlenecks before they derail your upcoming software releases.",
+    icon: BarChart3,
+    accent: "from-emerald-500/20 via-emerald-500/5 to-transparent",
+    borderGlow: "group-hover:border-emerald-500/50",
+    iconColor: "text-emerald-400",
+    badge: "Actionable Data",
+  },
+  {
+    title: "Enterprise Organization Security",
+    description:
+      "Seamless multi-tenant organization switching with role-based access control. Protect proprietary project data with robust Clerk token authentication.",
+    icon: ShieldCheck,
+    accent: "from-rose-500/20 via-rose-500/5 to-transparent",
+    borderGlow: "group-hover:border-rose-500/50",
+    iconColor: "text-rose-400",
+    badge: "Multi-Tenant",
   },
 ];
 
 const stats = [
-  { value: "10k+", label: "Active users" },
-  { value: "500+", label: "Teams onboarded" },
-  { value: "99.9%", label: "Uptime SLA" },
-  { value: "24/7", label: "Support coverage" },
+  { value: "10k+", label: "Active Engineers", change: "+42% this year" },
+  { value: "500+", label: "Teams Onboarded", change: "Fast-moving startups" },
+  { value: "99.9%", label: "Uptime Availability", change: "Enterprise SLA" },
+  { value: "3.4x", label: "Faster Sprint Delivery", change: "Zero bloat" },
+];
+
+const workflowSteps = [
+  {
+    step: "01",
+    title: "Create Organization & Workspace",
+    description:
+      "Establish your company workspace, configure project keys, and invite developers and designers in seconds.",
+    accent: "text-blue-400",
+  },
+  {
+    step: "02",
+    title: "Prioritize Backlog & Story Points",
+    description:
+      "Create user stories, assign Fibonacci story points, and rank tasks based on technical dependencies and urgency.",
+    accent: "text-indigo-400",
+  },
+  {
+    step: "03",
+    title: "Execute Sprints on Kanban",
+    description:
+      "Start time-boxed sprint cycles. Drag tasks seamlessly across columns with real-time feedback and state synchronization.",
+    accent: "text-purple-400",
+  },
+  {
+    step: "04",
+    title: "Review Velocity & Ship Milestones",
+    description:
+      "Close sprints, examine burndown trajectories, and celebrate shipped milestones with measurable productivity gains.",
+    accent: "text-emerald-400",
+  },
 ];
 
 const testimonials = [
   {
     quote:
-      "Finally, a project management tool that doesn't feel like a spreadsheet. Our team actually enjoys using it.",
+      "iconScrum finally gives our engineering team the speed of Linear combined with the sprint power of Jira. No bloated configuration menus—just pure velocity.",
     author: "Sarah Chen",
     role: "Engineering Lead",
-    company: "Vercel",
+    company: "Vercel Ecosystem",
+    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&h=120&fit=crop&crop=faces",
   },
   {
     quote:
-      "We moved from Jira in a week. The migration was smooth and the team was productive from day one.",
+      "We migrated our entire 40-person product team in one afternoon. The sprint management and clean drag-and-drop board feel unbelievably responsive.",
     author: "Marcus Rodriguez",
-    role: "CTO",
-    company: "Stripe",
+    role: "VP of Engineering",
+    company: "CloudScale Systems",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop&crop=faces",
   },
   {
     quote:
-      "The sprint management is exactly what we needed. Simple enough for startups, powerful enough for scale-ups.",
+      "The clarity iconScrum brings to sprint planning is phenomenal. Everyone on the team knows exactly what to pull next without endless status meetings.",
     author: "Emily Park",
-    role: "Product Director",
-    company: "Linear",
+    role: "Head of Product",
+    company: "Hyperion Labs",
+    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop&crop=faces",
   },
-];
-
-const integrations = [
-  { name: "GitHub", slug: "github" },
-  { name: "GitLab", slug: "gitlab" },
-  { name: "Slack", slug: "slack" },
-  { name: "Figma", slug: "figma" },
-  { name: "Notion", slug: "notion" },
-  { name: "Discord", slug: "discord" },
 ];
 
 export default function Home() {
+  const heroBadgeRef = useRef(null);
+  const heroTitleRef = useRef(null);
+  const heroDescRef = useRef(null);
+  const heroActionsRef = useRef(null);
+  const heroTrustRef = useRef(null);
+  const statsRef = useRef(null);
+  const featuresRef = useRef(null);
+  const workflowRef = useRef(null);
+  const faqRef = useRef(null);
+  const ctaRef = useRef(null);
+
+  useEffect(() => {
+    // Hero entrance animation timeline
+    const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+    heroTl
+      .fromTo(
+        heroBadgeRef.current,
+        { opacity: 0, y: -20, scale: 0.9 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.7 }
+      )
+      .fromTo(
+        heroTitleRef.current,
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.9 },
+        "-=0.4"
+      )
+      .fromTo(
+        heroDescRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.7 },
+        "-=0.5"
+      )
+      .fromTo(
+        heroActionsRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.6 },
+        "-=0.4"
+      )
+      .fromTo(
+        heroTrustRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.8 },
+        "-=0.3"
+      );
+
+    // Stats counter / reveal on scroll
+    if (statsRef.current) {
+      gsap.fromTo(
+        statsRef.current.querySelectorAll(".stat-item"),
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          stagger: 0.12,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: statsRef.current,
+            start: "top 85%",
+          },
+        }
+      );
+    }
+
+    // Features cards stagger reveal on scroll
+    if (featuresRef.current) {
+      gsap.fromTo(
+        featuresRef.current.querySelectorAll(".feature-card"),
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          stagger: 0.15,
+          duration: 0.85,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: featuresRef.current,
+            start: "top 80%",
+          },
+        }
+      );
+    }
+
+    // Workflow steps reveal on scroll
+    if (workflowRef.current) {
+      gsap.fromTo(
+        workflowRef.current.querySelectorAll(".workflow-card"),
+        { opacity: 0, y: 35 },
+        {
+          opacity: 1,
+          y: 0,
+          stagger: 0.18,
+          duration: 0.85,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: workflowRef.current,
+            start: "top 80%",
+          },
+        }
+      );
+    }
+
+    // FAQ section fade in
+    if (faqRef.current) {
+      gsap.fromTo(
+        faqRef.current,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.9,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: faqRef.current,
+            start: "top 85%",
+          },
+        }
+      );
+    }
+
+    // CTA section scale and glow
+    if (ctaRef.current) {
+      gsap.fromTo(
+        ctaRef.current,
+        { opacity: 0, scale: 0.96 },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 0.9,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: ctaRef.current,
+            start: "top 85%",
+          },
+        }
+      );
+    }
+
+    return () => {
+      ScrollTrigger.getAll().forEach((t) => t.kill());
+    };
+  }, []);
+
   return (
-    <div className="min-h-screen bg-zinc-950 text-gray-100">
-      {/* Navigation */}
-      <nav className="sticky top-0 z-50 border-b border-zinc-800 bg-zinc-950/80 backdrop-blur">
-        <div className="container mx-auto flex h-16 items-center justify-between px-4">
-          <Link href="/" className="flex items-center gap-2">
-            <Image
-              src="/logo.png"
-              alt="iconScrum"
-              width={120}
-              height={40}
-              className="h-8 w-auto object-contain"
-            />
-          </Link>
-          <div className="hidden items-center gap-8 md:flex">
-            <Link
-              href="#features"
-              className="text-sm text-gray-400 hover:text-gray-100"
-            >
-              Features
-            </Link>
-            <Link
-              href="#testimonials"
-              className="text-sm text-gray-400 hover:text-gray-100"
-            >
-              Customers
-            </Link>
-            <Link
-              href="#pricing"
-              className="text-sm text-gray-400 hover:text-gray-100"
-            >
-              Pricing
-            </Link>
+    <div className="min-h-screen text-zinc-100 overflow-x-hidden">
+      {/* Background radial atmosphere */}
+      <div className="fixed inset-0 pointer-events-none -z-10">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[550px] bg-gradient-to-b from-blue-600/15 via-indigo-600/10 to-transparent blur-[140px]" />
+      </div>
+
+      {/* 1. HERO SECTION */}
+      <section className="relative pt-12 sm:pt-20 pb-16 sm:pb-24">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl text-center">
+          {/* Animated Announcement Pill */}
+          <div ref={heroBadgeRef} className="inline-flex items-center gap-2 mb-6">
+            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 backdrop-blur-md text-xs sm:text-sm text-blue-300 shadow-sm shadow-blue-500/20">
+              <span className="flex h-2 w-2 rounded-full bg-blue-400 animate-pulse" />
+              <span className="font-semibold text-white">iconScrum 2.0</span>
+              <span className="text-blue-400/80">&bull;</span>
+              <span>Next-Gen Agile Project & Sprint Platform</span>
+              <ArrowRight className="w-3.5 h-3.5 text-blue-400" />
+            </span>
           </div>
-          <div className="flex items-center gap-4">
-            <Link href="/sign-in">
-              <Button variant="ghost" size="sm">
-                Sign in
+
+          {/* Main Hero Headline */}
+          <h1
+            ref={heroTitleRef}
+            className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.08] mb-6"
+          >
+            Ship faster with{" "}
+            <span className="bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">
+              clarity
+            </span>
+            ,<br className="hidden sm:inline" /> build without the chaos.
+          </h1>
+
+          {/* Subtitle Description */}
+          <p
+            ref={heroDescRef}
+            className="text-lg sm:text-xl text-zinc-300 max-w-3xl mx-auto mb-10 leading-relaxed"
+          >
+            The agile sprint management and issue tracking workspace engineered
+            for high-velocity engineering teams. Plan sprints, triage issues,
+            and deliver quality software without spreadsheet fatigue.
+          </p>
+
+          {/* Call to Action Buttons */}
+          <div
+            ref={heroActionsRef}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10"
+          >
+            <Link href="/onboarding" className="w-full sm:w-auto">
+              <Button
+                size="lg"
+                className="w-full sm:w-auto h-12 px-8 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-base shadow-lg shadow-blue-500/25 transition-all hover:scale-[1.02]"
+              >
+                <span>Start Free Trial</span>
+                <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
-            <Link href="/onboarding">
-              <Button size="sm">Get started</Button>
+            <Link href="#preview" className="w-full sm:w-auto">
+              <Button
+                size="lg"
+                variant="outline"
+                className="w-full sm:w-auto h-12 px-7 border-zinc-700/80 bg-zinc-900/60 hover:bg-zinc-800 text-zinc-200 font-medium text-base backdrop-blur-sm"
+              >
+                <Sparkles className="mr-2 h-4 w-4 text-blue-400" />
+                <span>Explore Interactive Demo</span>
+              </Button>
             </Link>
           </div>
-        </div>
-      </nav>
 
-      {/* Hero Section */}
-      <section className="relative overflow-hidden py-20 sm:py-32">
-        <div className="container mx-auto px-4">
-          <div className="grid items-center gap-12 lg:grid-cols-2">
-            <div className="space-y-8">
-              <Badge variant="outline" className="border-zinc-700 text-zinc-400">
-                Project management, reimagined
-              </Badge>
-              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
-                Ship faster with{" "}
-                <span className="bg-gradient-to-r from-blue-400 to-violet-400 bg-clip-text text-transparent">
-                  clarity
-                </span>
-              </h1>
-              <p className="max-w-xl text-lg text-gray-400">
-                The project management tool your team will actually want to use.
-                Plan sprints, track issues, and ship work without the chaos.
-              </p>
-              <div className="flex flex-col gap-4 sm:flex-row">
-                <Link href="/onboarding">
-                  <Button size="lg" className="w-full sm:w-auto">
-                    Start for free
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-                <Link href="#features">
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="w-full sm:w-auto border-zinc-700"
-                  >
-                    See how it works
-                  </Button>
-                </Link>
-              </div>
-              <p className="text-sm text-gray-500">
-                No credit card required. Free for teams up to 10.
-              </p>
-            </div>
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 to-violet-500/10 blur-3xl" />
-              <div className="relative overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/50 p-4">
-                <img
-                  src="https://picsum.photos/seed/jiraclone-dashboard/800/600"
-                  alt="iconScrum dashboard preview"
-                  className="rounded-lg shadow-2xl"
-                  width={800}
-                  height={600}
-                />
-              </div>
-            </div>
+          {/* Trust Guarantees */}
+          <div
+            ref={heroTrustRef}
+            className="flex flex-wrap items-center justify-center gap-6 text-xs sm:text-sm text-zinc-400"
+          >
+            <span className="flex items-center gap-2">
+              <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+              Free for growing teams
+            </span>
+            <span className="flex items-center gap-2">
+              <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+              No credit card required
+            </span>
+            <span className="flex items-center gap-2">
+              <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+              Instant 60-second setup
+            </span>
+          </div>
+
+          {/* 2. SHOWCASE: INTERACTIVE 3D KANBAN BOARD */}
+          <div id="preview" className="mt-12 sm:mt-16">
+            <InteractiveKanban />
           </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="border-y border-zinc-800 bg-zinc-900/50 py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-            {stats.map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div className="text-3xl font-bold text-gray-100">
+      {/* 3. METRICS / STATS SECTION */}
+      <section
+        ref={statsRef}
+        className="border-y border-zinc-800/80 bg-zinc-950/60 backdrop-blur-md py-14"
+      >
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {stats.map((stat, idx) => (
+              <div key={idx} className="stat-item text-center space-y-1">
+                <div className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight bg-gradient-to-br from-white via-zinc-200 to-zinc-400 bg-clip-text text-transparent font-mono">
                   {stat.value}
                 </div>
-                <div className="mt-1 text-sm text-gray-500">{stat.label}</div>
+                <div className="text-sm font-semibold text-zinc-200">
+                  {stat.label}
+                </div>
+                <div className="text-xs text-blue-400 font-medium">
+                  {stat.change}
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section id="features" className="py-20 sm:py-32">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-              Everything you need to ship
-            </h2>
-            <p className="mt-4 text-lg text-gray-400">
-              Powerful features without the complexity. Built for teams who want
-              to focus on work, not tooling.
-            </p>
-          </div>
-          <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {features.map((feature) => (
-              <Card
-                key={feature.title}
-                className="group relative border-zinc-800 bg-zinc-900/50 transition-colors hover:border-zinc-700"
-              >
-                <div
-                  className={`absolute inset-0 bg-gradient-to-br ${feature.accent} opacity-0 transition-opacity group-hover:opacity-100`}
-                />
-                <CardContent className="relative p-6">
-                  <feature.icon className="mb-4 h-10 w-10 text-gray-300" />
-                  <h3 className="text-lg font-semibold">{feature.title}</h3>
-                  <p className="mt-2 text-sm text-gray-400">
-                    {feature.description}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Integrations Section */}
-      <section className="border-y border-zinc-800 bg-zinc-900/30 py-16">
-        <div className="container mx-auto px-4">
-          <p className="text-center text-sm font-medium uppercase tracking-wider text-gray-500">
-            Integrates with your favorite tools
+      {/* 4. TRUSTED BY TOP TECH COMPANIES */}
+      <section className="py-16 sm:py-20 border-b border-zinc-800/50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl text-center">
+          <p className="text-xs sm:text-sm uppercase tracking-widest text-zinc-400 font-semibold mb-8">
+            Empowering modern engineering teams at forward-thinking companies
           </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-8">
-            {integrations.map((integration) => (
-              <div
-                key={integration.slug}
-                className="flex items-center gap-2 text-gray-400"
-              >
-                <div className="h-8 w-8 rounded bg-zinc-800" />
-                <span className="text-sm font-medium">{integration.name}</span>
-              </div>
-            ))}
-          </div>
+          <Companycarousel />
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section id="testimonials" className="py-20 sm:py-32">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-              Trusted by engineering teams
+      {/* 5. CORE FEATURES BENTO GRID */}
+      <section id="features" ref={featuresRef} className="py-24 sm:py-32">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+          <div className="max-w-3xl mx-auto text-center mb-16 space-y-4">
+            <Badge
+              variant="outline"
+              className="border-blue-500/30 bg-blue-500/10 text-blue-400 px-3 py-1 text-xs"
+            >
+              <Sparkles className="w-3.5 h-3.5 mr-1.5" /> Engineered for Speed
+            </Badge>
+            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
+              Everything your team needs to ship on schedule
             </h2>
-            <p className="mt-4 text-lg text-gray-400">
-              See what teams are saying about making the switch.
+            <p className="text-base sm:text-lg text-zinc-400 leading-relaxed">
+              Ditch slow loading times and endless configuration submenus. iconScrum
+              focuses entirely on what keeps your sprint velocity peaking.
             </p>
           </div>
-          <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {testimonials.map((testimonial) => (
-              <Card
-                key={testimonial.author}
-                className="border-zinc-800 bg-zinc-900/50"
-              >
-                <CardContent className="p-6">
-                  <div className="mb-4 text-gray-300">
-                    &ldquo;{testimonial.quote}&rdquo;
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-full bg-zinc-700" />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {features.map((feature, idx) => {
+              const Icon = feature.icon;
+              return (
+                <Card
+                  key={idx}
+                  className={`feature-card group relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/50 backdrop-blur-md p-6 sm:p-7 transition-all duration-300 hover:translate-y-[-4px] hover:shadow-xl hover:shadow-black/50 ${feature.borderGlow}`}
+                >
+                  {/* Subtle hover gradient background */}
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${feature.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`}
+                  />
+
+                  <div className="relative z-10 flex flex-col h-full justify-between">
                     <div>
-                      <div className="font-medium">{testimonial.author}</div>
-                      <div className="text-sm text-gray-500">
-                        {testimonial.role}, {testimonial.company}
+                      <div className="flex items-center justify-between mb-5">
+                        <div
+                          className={`p-3 rounded-xl bg-zinc-950/80 border border-zinc-800/80 ${feature.iconColor} group-hover:scale-110 transition-transform duration-300`}
+                        >
+                          <Icon className="w-6 h-6" />
+                        </div>
+                        <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-zinc-800/70 text-zinc-400 border border-zinc-700/60">
+                          {feature.badge}
+                        </span>
                       </div>
+                      <h3 className="text-lg font-bold text-white mb-2 group-hover:text-blue-200 transition-colors">
+                        {feature.title}
+                      </h3>
+                      <p className="text-sm text-zinc-400 leading-relaxed">
+                        {feature.description}
+                      </p>
+                    </div>
+
+                    <div className="pt-5 mt-4 border-t border-zinc-800/60 flex items-center text-xs text-zinc-400 group-hover:text-white transition-colors">
+                      <span>Learn sprint workflow</span>
+                      <ChevronRight className="w-3.5 h-3.5 ml-1 transition-transform group-hover:translate-x-1" />
                     </div>
                   </div>
-                </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* 6. AGILE WORKFLOW STEP-BY-STEP */}
+      <section
+        id="workflow"
+        ref={workflowRef}
+        className="py-24 sm:py-32 border-t border-zinc-800/80 bg-zinc-950/70 relative overflow-hidden"
+      >
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+          <div className="max-w-3xl mx-auto text-center mb-16 space-y-4">
+            <Badge
+              variant="outline"
+              className="border-indigo-500/30 bg-indigo-500/10 text-indigo-400 px-3 py-1 text-xs"
+            >
+              <Workflow className="w-3.5 h-3.5 mr-1.5" /> Seamless Lifecycle
+            </Badge>
+            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
+              From Backlog to Production in 4 Simple Steps
+            </h2>
+            <p className="text-base sm:text-lg text-zinc-400 leading-relaxed">
+              Eliminate friction at every stage of your delivery cycle with clean,
+              purpose-built sprint mechanics.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+            {workflowSteps.map((step, idx) => (
+              <div
+                key={idx}
+                className="workflow-card relative rounded-2xl border border-zinc-800/90 bg-zinc-900/60 p-6 flex flex-col justify-between hover:border-zinc-700 transition-colors"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <span
+                      className={`text-3xl font-extrabold font-mono ${step.accent}`}
+                    >
+                      {step.step}
+                    </span>
+                    <span className="w-2 h-2 rounded-full bg-zinc-700" />
+                  </div>
+                  <h3 className="text-base font-bold text-white mb-2">
+                    {step.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
+                    {step.description}
+                  </p>
+                </div>
+
+                <div className="mt-6 pt-4 border-t border-zinc-800/60 flex items-center gap-1.5 text-xs text-zinc-400">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>Automated Sync</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 7. CUSTOMER TESTIMONIALS */}
+      <section className="py-24 sm:py-32 border-t border-zinc-800/80">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+          <div className="max-w-2xl mx-auto text-center mb-16 space-y-4">
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+              Trusted by engineering leaders
+            </h2>
+            <p className="text-base text-zinc-400">
+              Discover why high-performing software teams switched to iconScrum.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+            {testimonials.map((t, idx) => (
+              <Card
+                key={idx}
+                className="rounded-2xl border border-zinc-800/80 bg-zinc-900/50 backdrop-blur-md p-6 sm:p-7 flex flex-col justify-between hover:border-zinc-700 transition-colors"
+              >
+                <div className="space-y-4">
+                  <div className="flex gap-1 text-amber-400">
+                    {[...Array(5)].map((_, i) => (
+                      <span key={i} className="text-sm">★</span>
+                    ))}
+                  </div>
+                  <p className="text-sm sm:text-base text-zinc-300 leading-relaxed italic">
+                    &ldquo;{t.quote}&rdquo;
+                  </p>
+                </div>
+
+                <div className="mt-6 pt-4 border-t border-zinc-800/80 flex items-center gap-3">
+                  <img
+                    src={t.avatar}
+                    alt={t.author}
+                    className="w-10 h-10 rounded-full object-cover ring-2 ring-zinc-700"
+                  />
+                  <div>
+                    <div className="text-sm font-semibold text-white">
+                      {t.author}
+                    </div>
+                    <div className="text-xs text-zinc-400">
+                      {t.role} &bull; {t.company}
+                    </div>
+                  </div>
+                </div>
               </Card>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section id="pricing" className="py-20 sm:py-32">
-        <div className="container mx-auto px-4">
-          <div className="relative overflow-hidden rounded-2xl border border-zinc-800 bg-gradient-to-br from-zinc-900 to-zinc-950 px-6 py-16 text-center sm:px-12 sm:py-20">
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.1),transparent_50%)]" />
-            <div className="relative">
-              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-                Ready to get started?
+      {/* 8. INTERACTIVE FAQ SECTION */}
+      <section
+        id="faq"
+        ref={faqRef}
+        className="py-24 sm:py-32 border-t border-zinc-800/80 bg-zinc-950/60"
+      >
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+          <div className="text-center mb-14 space-y-4">
+            <Badge
+              variant="outline"
+              className="border-purple-500/30 bg-purple-500/10 text-purple-400 px-3 py-1 text-xs"
+            >
+              <MessageSquare className="w-3.5 h-3.5 mr-1.5" /> Answers on Demand
+            </Badge>
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-sm sm:text-base text-zinc-400 max-w-xl mx-auto">
+              Everything you need to know about setting up iconScrum, managing
+              sprints, and onboarding your developers.
+            </p>
+          </div>
+
+          <Accordion type="single" collapsible className="w-full space-y-4">
+            {faqs.map((faq, idx) => (
+              <AccordionItem
+                key={idx}
+                value={`faq-${idx}`}
+                className="rounded-2xl border border-zinc-800/90 bg-zinc-900/50 px-5 sm:px-6 py-1 data-[state=open]:border-zinc-700 transition-colors"
+              >
+                <AccordionTrigger className="text-left text-sm sm:text-base font-semibold text-zinc-200 hover:text-white hover:no-underline py-4">
+                  {faq.question}
+                </AccordionTrigger>
+                <AccordionContent className="text-xs sm:text-sm text-zinc-400 leading-relaxed pb-4 pt-1">
+                  {faq.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+
+          <div className="mt-10 text-center">
+            <p className="text-xs sm:text-sm text-zinc-400">
+              Have another question not answered above?{" "}
+              <Link
+                href="/contact"
+                className="text-blue-400 hover:text-blue-300 font-medium underline underline-offset-4"
+              >
+                Contact our support team &rarr;
+              </Link>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* 9. HIGH-CONVERSION FINAL CALL TO ACTION */}
+      <section className="py-20 sm:py-32">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+          <div
+            ref={ctaRef}
+            className="relative overflow-hidden rounded-3xl border border-blue-500/30 bg-gradient-to-br from-blue-950/40 via-zinc-900/90 to-purple-950/40 p-8 sm:p-14 lg:p-16 text-center shadow-2xl shadow-blue-950/40"
+          >
+            {/* Radial glow background */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.25),transparent_65%)] pointer-events-none" />
+
+            <div className="relative z-10 max-w-2xl mx-auto space-y-6">
+              <Badge
+                variant="outline"
+                className="border-blue-400/30 bg-blue-500/10 text-blue-300 px-3.5 py-1 text-xs"
+              >
+                <Sparkles className="w-3.5 h-3.5 mr-1.5" /> High-Velocity Agile
+              </Badge>
+
+              <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+                Ready to take your sprint delivery to the next level?
               </h2>
-              <p className="mx-auto mt-4 max-w-xl text-lg text-gray-400">
-                Join thousands of teams already using iconScrum to ship better
-                work, faster.
+
+              <p className="text-base sm:text-lg text-zinc-300 leading-relaxed">
+                Join thousands of software engineers already using iconScrum to
+                ship better software without the chaos. Set up your workspace in
+                60 seconds.
               </p>
-              <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
-                <Link href="/onboarding">
-                  <Button size="lg" className="w-full sm:w-auto">
-                    Start for free
+
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+                <Link href="/onboarding" className="w-full sm:w-auto">
+                  <Button
+                    size="lg"
+                    className="w-full sm:w-auto h-12 px-8 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-base shadow-lg shadow-blue-500/30"
+                  >
+                    <span>Start Using iconScrum Free</span>
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
-                <Link href="/sign-in">
+                <Link href="/sign-in" className="w-full sm:w-auto">
                   <Button
                     size="lg"
                     variant="outline"
-                    className="w-full sm:w-auto border-zinc-700"
+                    className="w-full sm:w-auto h-12 px-7 border-zinc-700 bg-zinc-900/60 hover:bg-zinc-800 text-zinc-200 font-medium text-base"
                   >
-                    Sign in to existing
+                    <span>Sign In to Existing Project</span>
                   </Button>
                 </Link>
               </div>
-              <div className="mt-8 flex flex-wrap justify-center gap-6 text-sm text-gray-500">
-                <span className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+
+              <div className="pt-6 flex flex-wrap items-center justify-center gap-6 text-xs text-zinc-400">
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
                   Free for up to 10 users
                 </span>
-                <span className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
                   No credit card required
                 </span>
-                <span className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
                   Cancel anytime
                 </span>
               </div>
@@ -360,121 +733,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="border-t border-zinc-800 py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            <div>
-              <Image
-                src="/logo.png"
-                alt="iconScrum"
-                width={120}
-                height={40}
-                className="h-8 w-auto object-contain"
-              />
-              <p className="mt-4 text-sm text-gray-500">
-                Project management for modern teams.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-medium">Product</h4>
-              <ul className="mt-4 space-y-2 text-sm text-gray-500">
-                <li>
-                  <Link href="#features" className="hover:text-gray-300">
-                    Features
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#pricing" className="hover:text-gray-300">
-                    Pricing
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-gray-300">
-                    Changelog
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-gray-300">
-                    Documentation
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-medium">Company</h4>
-              <ul className="mt-4 space-y-2 text-sm text-gray-500">
-                <li>
-                  <Link href="#" className="hover:text-gray-300">
-                    About
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-gray-300">
-                    Blog
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-gray-300">
-                    Careers
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-gray-300">
-                    Contact
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-medium">Legal</h4>
-              <ul className="mt-4 space-y-2 text-sm text-gray-500">
-                <li>
-                  <Link href="#" className="hover:text-gray-300">
-                    Privacy
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-gray-300">
-                    Terms
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-gray-300">
-                    Security
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-zinc-800 pt-8 sm:flex-row">
-            <p className="text-sm text-gray-500">
-              &copy; {new Date().getFullYear()} iconScrum. All rights reserved.
-            </p>
-            <div className="flex gap-4">
-              <Link
-                href="https://github.com/pawan-suthar1537"
-                className="text-gray-500 hover:text-gray-300"
-              >
-                <Github className="h-5 w-5" />
-              </Link>
-              <Link
-                href="https://www.linkedin.com/in/pawansuthar1537/"
-                className="text-gray-500 hover:text-gray-300"
-              >
-                <Linkedin className="h-5 w-5" />
-              </Link>
-              <Link
-                href="https://twitter.com"
-                className="text-gray-500 hover:text-gray-300"
-              >
-                <Twitter className="h-5 w-5" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
